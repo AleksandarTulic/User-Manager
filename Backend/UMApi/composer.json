@@ -1,0 +1,15 @@
+{
+    "require": {
+        "slim/slim": "^4.12",
+        "slim/psr7": "^1.6",
+        "php-di/php-di": "^7.0",
+        "vlucas/valitron": "^1.4",
+        "symfony/validator": "^7.0",
+        "illuminate/database": "^10.45"
+    },
+    "autoload": {
+        "psr-4": {
+            "": "src"
+        }
+    }
+}
