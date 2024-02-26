@@ -32,6 +32,9 @@ $app->group('/api', function (RouteCollectorProxy $group){
 
     $group->get('/roles', [RoleController::class, 'getAll']);
     $group->get('/roles/{id:[0-9]+}', [RoleController::class, 'getById']);
+    $group->post('/roles', [RoleController::class, 'create']);
+    $group->put('/roles/{id:[0-9]+}', [RoleController::class, 'update']);
+    $group->delete('/roles/{id:[0-9]+}', [RoleController::class, 'delete']);
 
 });
 
