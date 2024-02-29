@@ -33,5 +33,3 @@ create table `user_roles`(
 
 insert into roles(name) values('USER');
 insert into roles(name) values('ADMIN');
-
-SELECT * FROM roles WHERE state=3
