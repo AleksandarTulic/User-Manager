@@ -27,6 +27,9 @@ class AuthController{
 
         $result = $this->repository->isLogedIn($this->mapper->getMapping($body, LoginDTO::class));
 
+        if ($result){
+        }
+
         $response->getBody()->write(json_encode($result));
 
         return $response;
