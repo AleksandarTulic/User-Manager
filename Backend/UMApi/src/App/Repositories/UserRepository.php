@@ -1,18 +1,52 @@
 <?php 
 
-declare(strict_types=1);
-
 namespace App\Repositories;
 
 use PDO;
 use App\Database;
 use App\Constants\ProjectConstants;
+use App\Models\DTO\LoginDTO;
 use App\Models\User;
+use App\Services\CryptoService;
 use Exception;
+use PDOException;
 
 class UserRepository{
 
-    public function __construct(private Database $db){
+    public function __construct(private Database $db, private CryptoService $cryptoService){
+    }
+
+    public function isLogedIn(LoginDTO $dto){
+        $result = false;
+
+        try{
+            $pdo = $this->db->getConnection();
+
+            $stmt = $pdo->prepare('SELECT * FROM users u 
+                                WHERE u.state = :state 
+                                and u.username=:username'
+            );
+
+            $stmt->bindValue(':state', ProjectConstants::ACTIVE_STATE, PDO::PARAM_INT);
+            $stmt->bindValue(':username', $dto->username, PDO::PARAM_STR);
+            $stmt->execute();
+
+            $dbUser = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if (!$dbUser){
+                throw new PDOException('No entry.');
+            }
+
+            $dto->password = $this->cryptoService->getSha512(
+                $dto->password, 
+                $dbUser['salt']
+            );
+
+            $result = $dto->password === $dbUser['password']; 
+        }catch (PDOException $exc){
+        }
+        
+        return $result;
     }
 
     public function getAll():array{

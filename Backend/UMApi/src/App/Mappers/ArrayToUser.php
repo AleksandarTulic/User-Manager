@@ -17,18 +17,31 @@ class ArrayToUser implements IMapper{
 
         $timestamp = time();
 
-        $user->setUsername($body['username']);
+        if (array_key_exists('username', $body))
+            $user->setUsername($body['username']);
+
         $user->setSalt($this->cryptoService->getMD5($timestamp));
-        $user->setPassword(
-            $this->cryptoService->getSha512(
-                $body['password'], 
-                $user->getSalt()
-            )
-        );
-        $user->setFirstName($body['firstName']);
-        $user->setLastName($body['lastName']);
-        $user->setSexId($body['sexId']);
-        $user->setUserRoles($body['roles']);
+
+        if (array_key_exists('password', $body)){
+            $user->setPassword(
+                $this->cryptoService->getSha512(
+                    $body['password'], 
+                    $user->getSalt()
+                )
+            );
+        }
+
+        if (array_key_exists('firstName', $body))
+            $user->setFirstName($body['firstName']);
+        
+        if (array_key_exists('lastName', $body))
+            $user->setLastName($body['lastName']);
+
+        if (array_key_exists('sexId', $body))
+            $user->setSexId($body['sexId']);
+
+        if (array_key_exists('roles', $body))
+            $user->setUserRoles($body['roles']);
 
         return $user;
     }

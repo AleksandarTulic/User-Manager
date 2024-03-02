@@ -5,7 +5,8 @@
         "php-di/php-di": "^7.0",
         "vlucas/valitron": "^1.4",
         "symfony/validator": "^7.0",
-        "illuminate/database": "^10.45"
+        "illuminate/database": "^10.45",
+        "predis/predis": "^2.2"
     },
     "autoload": {
         "psr-4": {
