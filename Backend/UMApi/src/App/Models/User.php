@@ -14,6 +14,8 @@ class User{
     private string $lastName;
     private int $sexId;
 
+    private array $roles;
+
     public function __construct(){
     }
 
@@ -47,6 +49,10 @@ class User{
         $this->sexId =$sexId;
     }
 
+    public function setUserRoles(array $roles):void{
+        $this->roles = $roles;
+    }
+
     //GETTERS
 
     public function getId():int{
@@ -75,6 +81,10 @@ class User{
 
     public function getSexId():int{
         return $this->sexId;
+    }
+
+    public function getUserRoles():array{
+        return $this->roles;
     }
 }
 

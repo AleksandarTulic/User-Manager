@@ -36,7 +36,9 @@ $app->group('/api', function (RouteCollectorProxy $group){
     $group->delete('/roles/{id:[0-9]+}', [RoleController::class, 'delete']);
 
     $group->get('/users', [UserController::class, 'getAll']);
+    $group->get('/users/{id:[0-9]+}', [UserController::class, 'getById']);
     $group->post('/users', [UserController::class, 'create']);
+    $group->put('/users/{id:[0-9]+}', [UserController::class, 'update']);
     $group->delete('/users/{id:[0-9]+}', [UserController::class, 'delete']);
 
 });

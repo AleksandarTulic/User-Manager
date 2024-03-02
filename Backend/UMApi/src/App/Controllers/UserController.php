@@ -1,7 +1,5 @@
 <?php 
 
-declare(strict_types=1);
-
 namespace App\Controllers;
 
 use App\Mappers\Mapper;
@@ -26,11 +24,32 @@ class UserController{
         return $response;
     }
 
+    public function getById(Request $request, Response $response, string $id) : Response{
+        $arr = $this->repository->getById((int) $id);
+
+        $body = json_encode($arr);
+
+        $response->getBody()->write($body);
+
+        return $response;
+    }
+
     public function create(Request $request, Response $response) : Response{
         $body = $request->getParsedBody();
 
-        $var = $this->mapper->getMapping($body, User::class);
-        //$response->getBody()->write(json_encode($result));
+        $result = $this->repository->create($this->mapper->getMapping($body, User::class));
+
+        $response->getBody()->write(json_encode($result));
+
+        return $response;
+    }
+
+    public function update(Request $request, Response $response, string $id) : Response{
+        $body = $request->getParsedBody();
+
+        $result = $this->repository->update($id, $this->mapper->getMapping($body, User::class));
+
+        $response->getBody()->write(json_encode($result));
 
         return $response;
     }

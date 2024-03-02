@@ -28,6 +28,7 @@ class ArrayToUser implements IMapper{
         $user->setFirstName($body['firstName']);
         $user->setLastName($body['lastName']);
         $user->setSexId($body['sexId']);
+        $user->setUserRoles($body['roles']);
 
         return $user;
     }
