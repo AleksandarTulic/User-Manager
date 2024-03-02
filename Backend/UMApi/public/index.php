@@ -3,13 +3,12 @@
 declare(strict_types=1);
 
 use App\Controllers\RoleController;
+use App\Controllers\UserController;
 use App\Middlewares\ResponseJsonMiddleware;
 use Slim\Factory\AppFactory;
 use DI\ContainerBuilder;
 use Slim\Routing\RouteCollectorProxy;
 use Slim\Handlers\Strategies\RequestResponseArgs;
-use Psr\Http\Message\ServerRequestInterface as Request;
-use Psr\Http\Message\ResponseInterface as Response;
 
 define('APP_ROOT', dirname(__DIR__));
 require APP_ROOT . '/vendor/autoload.php';
@@ -35,6 +34,10 @@ $app->group('/api', function (RouteCollectorProxy $group){
     $group->post('/roles', [RoleController::class, 'create']);
     $group->put('/roles/{id:[0-9]+}', [RoleController::class, 'update']);
     $group->delete('/roles/{id:[0-9]+}', [RoleController::class, 'delete']);
+
+    $group->get('/users', [UserController::class, 'getAll']);
+    $group->post('/users', [UserController::class, 'create']);
+    $group->delete('/users/{id:[0-9]+}', [UserController::class, 'delete']);
 
 });
 
