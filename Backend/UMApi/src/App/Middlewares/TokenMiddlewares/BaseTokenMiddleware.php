@@ -10,7 +10,7 @@ abstract class BaseTokenMiddleware{
     public function __construct(private TokenService $tokenService){
     }
 
-    protected function check(Request $request, string $typeCheck):bool{
+    protected function check(Request $request, string $typeCheck){
         $flag = true;
 
         $authorizationHeader = $request->getHeaderLine('Authorization');
@@ -27,6 +27,9 @@ abstract class BaseTokenMiddleware{
                     break;
                 case TimeExpirationMiddleware::class:
                     $flag = $this->tokenService->validateExpiration($token);
+                    break;
+                case RoleMiddleware::class:
+                    $flag = $this->tokenService->validateRole($request, $token);
                     break;
             }
         } else {

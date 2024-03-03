@@ -2,12 +2,19 @@
 
 namespace App\Services;
 
+use App\Models\Role;
+use App\Models\RoleRight;
 use App\Repositories\LoginRedisRepository;
+use App\Repositories\RoleRightsRepository;
+use Illuminate\Support\Arr;
+use Psr\Http\Message\ServerRequestInterface as Request;
+use Slim\Routing\RouteContext;
 
 class TokenService{
 
     public function __construct(private CryptoService $cryptoService,
-                                private LoginRedisRepository $loginRedisRepository){
+                                private LoginRedisRepository $loginRedisRepository,
+                                private RoleRightsRepository $roleRightsRepository){
     }
 
     public function createToken(string $username, array $roles){
@@ -102,6 +109,33 @@ class TokenService{
         $result = $this->loginRedisRepository->getUserToken($tokenArr->payload->username);
 
         return $result !== null;
+    }
+
+    public function validateRole(Request $request, string $token){
+        $tokenArr = json_decode($this->cryptoService->base64Decode($token));
+
+        $routeContext = RouteContext::fromRequest($request);
+        $route = $routeContext->getRoute();
+        $pattern = $route->getPattern();
+        $controllerMethod = $route->getCallable()[1];
+
+        $roleRight = new RoleRight();
+        $roleRight->setResource($this->cryptoService->base64Encode($pattern));
+        $roleRight->setControllerMethod($controllerMethod);
+
+        $roles = array();
+        foreach ($tokenArr->payload->roles as $role){
+            array_push($roles, new Role($role));
+        }
+        $roleRight->setRoles($roles);
+
+        return $this->roleRightsRepository->isRequestValid($roleRight);
+    }
+
+    public function restartExpiration(string $token){
+        $tokenArr = json_decode($this->cryptoService->base64Decode($token));
+
+        $this->loginRedisRepository->restartExpiration($tokenArr->payload->username);
     }
 
 }

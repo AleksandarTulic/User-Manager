@@ -4,6 +4,8 @@ use App\Controllers\AuthController;
 use App\Controllers\RoleController;
 use App\Controllers\UserController;
 use App\Middlewares\ResponseJsonMiddleware;
+use App\Middlewares\TokenMiddlewares\RestartExpirationMiddleware;
+use App\Middlewares\TokenMiddlewares\RoleMiddleware;
 use App\Middlewares\TokenMiddlewares\StructureMiddleware;
 use App\Middlewares\TokenMiddlewares\SignatureMiddleware;
 use App\Middlewares\TokenMiddlewares\TimeExpirationMiddleware;
@@ -28,7 +30,8 @@ $collector->setDefaultInvocationStrategy(new RequestResponseArgs);
 $app->addBodyParsingMiddleware();
 
 //add to every response content-type application/json
-$app->add(new ResponseJsonMiddleware);
+$app->add(ResponseJsonMiddleware::class);
+$app->add(RestartExpirationMiddleware::class);
 
 $app->group('/api', function (RouteCollectorProxy $group){
 
@@ -42,7 +45,7 @@ $app->group('/api', function (RouteCollectorProxy $group){
     $group->get('/users/{id:[0-9]+}', [UserController::class, 'getById']);
     $group->post('/users', [UserController::class, 'create']);
     $group->put('/users/{id:[0-9]+}', [UserController::class, 'update']);
-    $group->delete('/users/{id:[0-9]+}', [UserController::class, 'delete'])->add(TimeExpirationMiddleware::class);
+    $group->delete('/users/{id:[0-9]+}', [UserController::class, 'delete'])->add(RoleMiddleware::class);
 
     $group->post('/login', [AuthController::class, 'login']);
 

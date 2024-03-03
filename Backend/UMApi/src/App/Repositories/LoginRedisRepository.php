@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Constants\ProjectConstants;
 use App\RedisDatabase;
 use Exception;
 use Predis\Client;
@@ -16,6 +17,7 @@ class LoginRedisRepository{
             $client = $this->db->getConnection();
             
             $client->set($username, $token);
+            $client->expire($username, ProjectConstants::TOKEN_TTL);
         }catch (Exception $exc){
         }
     }
@@ -31,6 +33,14 @@ class LoginRedisRepository{
         }
 
         return $result;
+    }
+
+    public function restartExpiration(string $username){
+        try{
+            $client = $this->db->getConnection();
+            $client->expire($username, ProjectConstants::TOKEN_TTL);
+        }catch(Exception $exc){
+        }
     }
 
 }
