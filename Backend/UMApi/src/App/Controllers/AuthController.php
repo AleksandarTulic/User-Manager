@@ -22,20 +22,12 @@ class AuthController{
     }
 
     public function login(Request $request, Response $response):Response{
-        //check if login is successful
-        //  if success
-        //      create token
-        //      then I need to write to db new login request
-        //      add token to redis db
-        //      return value
-        // if not success
-        //      then return some message and status code
-
         $body = $request->getParsedBody();
 
         $result = $this->repository->isLogedIn($this->mapper->getMapping($body, LoginDTO::class));
 
         if ($result){
+            //create token
             $token = $this->tokenService->createToken($result->getUsername(), $result->getUserRoles());
             
             $userLogin = new UserLogin();
@@ -44,11 +36,17 @@ class AuthController{
             $userLogin->setUserId($result->getId());
             $userLogin->setCreatedDT(date('Y-m-d H:i:s', time()));
 
+            //save token/login to DB
             $this->userLoginRepository->create($userLogin);
+
             //save token to redis DB
             $this->loginRedisRepository->logInUser($result->getUsername(), $token);
 
+            //add token to response header
             $response = $response->withHeader('Authorization', 'Bearer ' . $token);
+
+            //we want the client to see/save token on their local machine
+            $result = $token;
         }
 
         $response->getBody()->write(json_encode($result));
