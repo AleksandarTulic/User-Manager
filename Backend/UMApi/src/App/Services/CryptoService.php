@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Constants\ProjectConstants;
+
 class CryptoService{
 
     public function getMD5(string $value){
@@ -18,6 +20,10 @@ class CryptoService{
 
     public function base64Decode(string $value){
         return base64_decode(strtr($value, '-_', '+/'));
+    }
+
+    public function hmacSha256(string $value){
+        return hash_hmac('sha256', $value, ProjectConstants::HMAC_SECRET_KEY);
     }
 
 }

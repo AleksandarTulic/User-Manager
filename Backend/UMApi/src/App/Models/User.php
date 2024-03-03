@@ -4,15 +4,15 @@ namespace App\Models;
 
 class User{
 
-    private int $id;
-    private string $username;
-    private string $password;
-    private string $salt;
-    private string $firstName;
-    private string $lastName;
-    private int $sexId;
+    private ?int $id;
+    private ?string $username;
+    private ?string $password;
+    private ?string $salt;
+    private ?string $firstName;
+    private ?string $lastName;
+    private ?int $sexId;
 
-    private array $roles;
+    private ?array $roles;
 
     public function __construct(){
     }

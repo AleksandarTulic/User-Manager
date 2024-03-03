@@ -42,7 +42,29 @@ class UserRepository{
                 $dbUser['salt']
             );
 
-            $result = $dto->password === $dbUser['password']; 
+            if ($dto->password === $dbUser['password']){
+                $stmt = $pdo->prepare('SELECT r.name FROM roles r, user_roles ur 
+                                WHERE ur.role_id = r.id and r.state = :state 
+                                and ur.user_id = :user_id'
+                );
+
+                $stmt->bindValue(':state', ProjectConstants::ACTIVE_STATE, PDO::PARAM_INT);
+                $stmt->bindValue(':user_id', $dbUser['id'], PDO::PARAM_INT);
+                $stmt->execute();
+
+                $userRoles = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                $tmpRoles = array();
+                foreach ($userRoles as $role){
+                    array_push($tmpRoles, $role['name']);
+                }
+            
+                $user = new User();
+                $user->setUserRoles($tmpRoles);
+                $user->setUsername($dto->username);
+                $user->setId($dbUser['id']);
+                
+                $result = $user;
+            } 
         }catch (PDOException $exc){
         }
         

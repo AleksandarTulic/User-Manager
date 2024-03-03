@@ -17,14 +17,14 @@ class TokenService{
         $payload = '
             {
                 "username": "' . $username . '",
-                "roles": ' . $roles . ',
+                "roles": ' . json_encode($roles) . ',
                 "created": ' . time() . '
             }
         ';
 
         $signature = '
             {
-                "signature": ""
+                "signature": "' . $this->cryptoService->hmacSha256($header . $payload) . '"
             }
         ';
 
