@@ -46,7 +46,7 @@ create table usermanagerdb.`role_rights`(
 	id int not null auto_increment,
 	role_id int not null,
 	resource varchar(100) not null,
-	http_method varchar(20) not null,
+	controller_method varchar(20) not null,
 	foreign key (role_id) references roles(id) on update cascade on delete restrict,
 	primary key(id)
 );
