@@ -26,6 +26,7 @@ abstract class BaseTokenMiddleware{
                     $flag = $this->tokenService->validateStructure($token);
                     break;
                 case TimeExpirationMiddleware::class:
+                    $flag = $this->tokenService->validateExpiration($token);
                     break;
             }
         } else {

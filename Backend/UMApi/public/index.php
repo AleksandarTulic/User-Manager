@@ -6,6 +6,7 @@ use App\Controllers\UserController;
 use App\Middlewares\ResponseJsonMiddleware;
 use App\Middlewares\TokenMiddlewares\StructureMiddleware;
 use App\Middlewares\TokenMiddlewares\SignatureMiddleware;
+use App\Middlewares\TokenMiddlewares\TimeExpirationMiddleware;
 use App\Services\TokenService;
 use Slim\Factory\AppFactory;
 use DI\ContainerBuilder;
@@ -41,7 +42,7 @@ $app->group('/api', function (RouteCollectorProxy $group){
     $group->get('/users/{id:[0-9]+}', [UserController::class, 'getById']);
     $group->post('/users', [UserController::class, 'create']);
     $group->put('/users/{id:[0-9]+}', [UserController::class, 'update']);
-    $group->delete('/users/{id:[0-9]+}', [UserController::class, 'delete'])->add(SignatureMiddleware::class);
+    $group->delete('/users/{id:[0-9]+}', [UserController::class, 'delete'])->add(TimeExpirationMiddleware::class);
 
     $group->post('/login', [AuthController::class, 'login']);
 

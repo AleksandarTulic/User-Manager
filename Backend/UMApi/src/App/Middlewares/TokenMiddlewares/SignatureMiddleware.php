@@ -10,6 +10,7 @@ use Slim\Psr7\Response;
 class SignatureMiddleware extends BaseTokenMiddleware{
 
     public function __construct(private TokenService $tokenService){
+        parent::__construct($tokenService);
     }
 
     public function __invoke(Request $request, RequestHandler $handler): Response{

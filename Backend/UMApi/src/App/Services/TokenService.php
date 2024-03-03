@@ -2,9 +2,12 @@
 
 namespace App\Services;
 
+use App\Repositories\LoginRedisRepository;
+
 class TokenService{
 
-    public function __construct(private CryptoService $cryptoService){
+    public function __construct(private CryptoService $cryptoService,
+                                private LoginRedisRepository $loginRedisRepository){
     }
 
     public function createToken(string $username, array $roles){
@@ -91,6 +94,14 @@ class TokenService{
             return false;
 
         return true;
+    }
+
+    public function validateExpiration(string $token){
+        $tokenArr = json_decode($this->cryptoService->base64Decode($token));
+    
+        $result = $this->loginRedisRepository->getUserToken($tokenArr->payload->username);
+
+        return $result !== null;
     }
 
 }
