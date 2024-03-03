@@ -7,7 +7,7 @@ create table `sexes`(
 create table `roles`(
 	id int not null auto_increment,
 	name varchar(100) not null unique check(length(name) >= 2),
-	state int not null default(3),
+	state int not null default 3,
 	primary key (id)
 );
 
@@ -16,8 +16,9 @@ create table `users`(
 	username varchar(100) not null unique check(length(username) >= 2),
 	password varchar(512) not null check(length(password)=512),
 	salt varchar(32) not null check(length(salt)=32),
-	firstName varchar(100) null check(length(firstName) >= 2),
-	lastName varchar(100) null check(length(lastName) >= 2),
+	state int not null default 3,
+	first_name varchar(100) null check(length(firstName) >= 2),
+	last_name varchar(100) null check(length(lastName) >= 2),
 	sex_id int null,
 	foreign key (sex_id) references sexes(id) on update cascade on delete restrict,
 	primary key (id)
@@ -31,5 +32,28 @@ create table `user_roles`(
 	primary key (user_id, role_id)
 );
 
+create table usermanagerdb.`user_logins`(
+	id int not null auto_increment,
+	token text not null check(length(token)>=2),
+	ip varchar(50) not null check(length(ip)>=2),
+	created_dt timestamp not null default now(),
+	user_id int not null,
+	foreign key (user_id) references users(id) on update cascade on delete restrict,
+	primary key(id)
+);
+
+create table usermanagerdb.`role_rights`(
+	id int not null auto_increment,
+	role_id int not null,
+	resource varchar(100) not null,
+	http_method varchar(20) not null,
+	foreign key (role_id) references roles(id) on update cascade on delete restrict,
+	primary key(id)
+);
+
 insert into roles(name) values('USER');
 insert into roles(name) values('ADMIN');
+
+insert into sexes(name) values('MALE');
+insert into sexes(name) values('FEMALE');
+insert into sexes(name) values('OTHER');
