@@ -6,7 +6,7 @@
  
 ## Features
 
-The goal of this Api is to create a user-management system that will, as it's name suggests, manage user accounts of "<i>some</i>" system.
+<p>The goal of this Api is to create a user-management system that will, as it's name suggests, manage user accounts of "<i>some</i>" system.</p>
 
 ## Installation
 
