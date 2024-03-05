@@ -24,15 +24,16 @@
 
 |        Controller         |               Method               | Description |
 |:-------------------:|:---------------------------------------:|:--------|
-|       `RoleController`        | getAll |    Get all available roles (<i>because the api uses soft delete, when retrieveing data we check if role was meant to be deleted</i>).     |
-|       `RoleController`        | getById |    Retrieve the role given the ID.     |
-|   `RoleController`   |  create  |    Create a new role (<i>every <b>active</b> role needs to have a unique name</i>).     |
-|   `RoleController`   |        update        |    Update name of a role.     |
-|   `RoleController`   |          delete          |    Soft delete a role.     |
-|   `DATABASE_NAME`   |          MongoDB database name          |    ✅     |
-| `DATABASE_USERNAME` |          MongoDB database user          |    ✅     |
-| `DATABASE_PASSWORD` |        MongoDB database password        |    ✅     |
-|    `CORS_ORIGIN`    |           CORS allowed origin           |    ❌     |
+| `RoleController` | getAll  |    Get all available roles (<i>because the api uses soft delete, when retrieveing data we check if role was meant to be deleted</i>).     |
+| `RoleController` | getById |    Retrieve the role given the ID.     |
+| `RoleController` | create  |    Create a new role (<i>every <b>active</b> role needs to have a unique name</i>).     |
+| `RoleController` | update  |    Update name of a role.     |
+| `RoleController` | delete  |    Soft delete a role given an id.     |
+| `UserController` | getAll  |    Get all available users.     |
+| `UserController` | getById |    Retrieve the user given the ID.     |
+| `UserController` | create  |    Create a new user.     |
+| `UserController` | update  |    Update data of the selected user (_by id__).    |
+| `UserController` | delete  |    Soft delete a user given an id.    |
 
 </div>
 
