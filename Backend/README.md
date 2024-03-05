@@ -21,32 +21,18 @@
 | Data 4   | Data 5   | Data 6   |
 
 <div align="center">
-  
-<table style="width:fit-content">
-  <tr>
-    <th>Controller</th>
-    <th>Method</th>
-    <th>Description</th>
-  </tr>
 
-  <tr>
-    <td>`RoleController`</td>
-    <td>create</td>
-    <td>Creating a new role.</td>
-  </tr>
-  
-  <tr>
-    <td>RoleController</td>
-    <td>update</td>
-    <td>Update data of an already existing role.</td>
-  </tr>
-
-  <tr>
-    <td>RoleController</td>
-    <td>delete</td>
-    <td>Delete a role (<i>this is soft delete</i>).</td>
-  </tr>
-</table>
+|        Controller         |               Method               | Description |
+|:-------------------:|:---------------------------------------:|:--------:|
+|       `RoleController`        | getAll |    Get all available roles (<i>because the api uses soft delete, when retrieveing data we check if role was meant to be deleted.</i>)     |
+|       `RoleController`        | getById |    ❌     |
+|   `RoleController`   |  create  |    ✅     |
+|   `RoleController`   |        update        |    ✅     |
+|   `RoleController`   |          delete          |    ❌     |
+|   `DATABASE_NAME`   |          MongoDB database name          |    ✅     |
+| `DATABASE_USERNAME` |          MongoDB database user          |    ✅     |
+| `DATABASE_PASSWORD` |        MongoDB database password        |    ✅     |
+|    `CORS_ORIGIN`    |           CORS allowed origin           |    ❌     |
 
 </div>
 
