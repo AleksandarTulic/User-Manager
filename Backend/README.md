@@ -1,6 +1,6 @@
 # UMApi - documentation
 
-- [Markdown Navigation]
+- [Markdown Navigation](#markdown-navigation)
   - [Features](#features)
   - [Installation](#installation)
  
