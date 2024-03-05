@@ -15,11 +15,10 @@
   <li>AuthController</li>
 </ul>
 
-<table>
+<table style="width:100%">
   <tr>
     <th>Controller</th>
     <th>Method</th>
-    <th>Functionality</th>
     <th>Functionality</th>
   </tr>
 
@@ -27,23 +26,8 @@
     <td>RoleController</td>
     <td>create</td>
     <td>Creating a new role.</td>
-    <td>
-      ```json
-      {
-        'a': 123,
-        'b': 321
-      }
-      ```
-    </td>
   </tr>
 </table>
-
-```json
-  {
-    'a': 123,
-    'b': 321
-  }
-```
 
 ## Installation
 
