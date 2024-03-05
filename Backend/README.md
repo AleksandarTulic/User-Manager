@@ -46,17 +46,17 @@
 | Data 1   | Data 2   | Data 3   |
 | Data 4   | Data 5   | Data 6   |
 
-|     Controller      |               Method               | Required | Default value |                   Limitations                    |
-|:-------------------:|:---------------------------------------:|:--------:|:-------------:|:------------------------------------------------:|
-|       `RoleController`        | getAll |    ❌     |  `127.0.0.1`  |          If set, can't be empty string           |
-|       `RoleController`        | getById |    ❌     |    `8080`     | If set, must be a number between `0` and `65535` |
-|   `RoleController`   |  create  |    ✅     |       ❌       |  Must be `development`, `production` or `test`   |
-|   `RoleController`   |        update        |    ✅     |       ❌       |              Can't be empty string               |
-|   `RoleController`   |          delete          |    ❌     |  `undefined`  | If set, must be a number between `0` and `65535` |
-|   `DATABASE_NAME`   |          MongoDB database name          |    ✅     |       ❌       |              Can't be empty string               |
-| `DATABASE_USERNAME` |          MongoDB database user          |    ✅     |       ❌       |              Can't be empty string               |
-| `DATABASE_PASSWORD` |        MongoDB database password        |    ✅     |       ❌       |              Can't be empty string               |
-|    `CORS_ORIGIN`    |           CORS allowed origin           |    ❌     |      `*`      |          If set, can't be empty string           |
+|     Controller      |               Method               | Description |
+|:-------------------:|:---------------------------------------:|:--------:|
+|       `RoleController`        | getAll |    ❌     |
+|       `RoleController`        | getById |    ❌     |
+|   `RoleController`   |  create  |    Creating a new role.     |
+|   `RoleController`   |        update        |    ✅     |
+|   `RoleController`   |          delete          |    ❌     |
+|   `DATABASE_NAME`   |          MongoDB database name          |    ✅     |
+| `DATABASE_USERNAME` |          MongoDB database user          |    ✅     |
+| `DATABASE_PASSWORD` |        MongoDB database password        |    ✅     |
+|    `CORS_ORIGIN`    |           CORS allowed origin           |    ❌     |
 
 |        Name         |               Description               | Required | Default value |                   Limitations                    |
 |:-------------------:|:---------------------------------------:|:--------:|:-------------:|:------------------------------------------------:|
