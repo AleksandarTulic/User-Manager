@@ -26,9 +26,9 @@
 |:-------------------:|:---------------------------------------:|:--------|
 |       `RoleController`        | getAll |    Get all available roles (<i>because the api uses soft delete, when retrieveing data we check if role was meant to be deleted</i>).     |
 |       `RoleController`        | getById |    Retrieve the role given the ID.     |
-|   `RoleController`   |  create  |    Create a new role (<i>every <b>active</b> role needs to have a unique name.</i>).     |
-|   `RoleController`   |        update        |    ✅     |
-|   `RoleController`   |          delete          |    ❌     |
+|   `RoleController`   |  create  |    Create a new role (<i>every <b>active</b> role needs to have a unique name</i>).     |
+|   `RoleController`   |        update        |    Update name of a role.     |
+|   `RoleController`   |          delete          |    Soft delete a role.     |
 |   `DATABASE_NAME`   |          MongoDB database name          |    ✅     |
 | `DATABASE_USERNAME` |          MongoDB database user          |    ✅     |
 | `DATABASE_PASSWORD` |        MongoDB database password        |    ✅     |
