@@ -2,16 +2,14 @@
 
 - [Navigation](#navigation)
   - [Features](#features)
-    - [When I would like to use this subsystem?](#when I would like to use this subsystem?) 
   - [Installation](#installation)
  
 ## Features
 
-<p>The goal of this Api is to create a user-management system that will, as it's name suggests, manage user accounts of <b>"<i>xy</i>"</b> system. The "xy" system can be for example a blog web application, bakery shop, eCommerce web app or something else.</p> 
-
-### When I would like to use this subsystem?
-
-<p>I would use this substem for accelerating project development. Instead of building a user-management system from scratch i would just copy/paste this code in "xy" project and continue the development of other functionalities that are specific for "xy" project.</p>
+<p>The goal of this Api is to create a user-management system that will, as it's name suggests, manage user accounts of <b>"<i>xy</i>"</b> system (<i>the "xy" system is any system that needs management og user accounts</i>).</p> 
+<p>
+  The main purpose of this subsystem is the accelaration of project development. Instead of building a user-management system from scratch i would just copy/paste this code in "xy" project and continue the development of other functionalities that are specific for "xy" project.
+</p>
 
 <p>Api contains following controllers:</p>
 <ul>
