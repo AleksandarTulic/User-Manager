@@ -30,7 +30,7 @@
   </tr>
 
   <tr>
-    <td bgcolor="red">RoleController</td>
+    <td>`RoleController`</td>
     <td>create</td>
     <td>Creating a new role.</td>
   </tr>
