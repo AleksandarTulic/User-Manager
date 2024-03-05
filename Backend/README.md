@@ -1,9 +1,3 @@
-<style>
-  table{
-    width: 100%;
-  }
-</style>
-
 # UMApi - documentation
 
 - [Navigation](#navigation)
@@ -22,7 +16,7 @@
 </ul>
 
 <table>
-  <tr>
+  <tr style="width:40%;">
     <th>Controller</th>
     <th>Method</th>
     <th>Functionality</th>
