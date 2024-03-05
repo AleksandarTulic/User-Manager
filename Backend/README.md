@@ -8,12 +8,35 @@
 
 <p>The goal of this Api is to create a user-management system that will, as it's name suggests, manage user accounts of "<i>some</i>" system.</p>
 
-<p>The client can use following controller-s:</p>
+<p>Api contains following controllers:</p>
 <ul>
   <li>RoleController</li>
   <li>UserController</li>
   <li>AuthController</li>
 </ul>
+
+<table>
+  <tr>
+    <th>Controller</th>
+    <th>Method</th>
+    <th>Functionality</th>
+    <th>Functionality</th>
+  </tr>
+
+  <tr>
+    <td>RoleController</td>
+    <td>create</td>
+    <td>Creating a new role.</td>
+    <td>
+      ```json
+      {
+        'a': 123,
+        'b': 321
+      }
+      ```
+    </td>
+  </tr>
+</table>
 
 ## Installation
 
