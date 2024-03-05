@@ -16,7 +16,7 @@
 </ul>
 
 <table>
-  <tr style="width:200px;">
+  <tr style="background-color: red;">
     <th>Controller</th>
     <th>Method</th>
     <th>Functionality</th>
