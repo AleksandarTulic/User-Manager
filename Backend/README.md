@@ -1,3 +1,9 @@
+<style>
+  table{
+    width: 100%;
+  }
+</style>
+
 # UMApi - documentation
 
 - [Navigation](#navigation)
@@ -15,7 +21,7 @@
   <li>AuthController</li>
 </ul>
 
-<table style="width:100% !important">
+<table>
   <tr>
     <th>Controller</th>
     <th>Method</th>
