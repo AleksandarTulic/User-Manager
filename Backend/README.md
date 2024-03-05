@@ -15,8 +15,8 @@
   <li>AuthController</li>
 </ul>
 
-<table>
-  <tr style="background-color: red;">
+<table style="width:fit-content">
+  <tr>
     <th>Controller</th>
     <th>Method</th>
     <th>Functionality</th>
