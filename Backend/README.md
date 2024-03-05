@@ -15,11 +15,6 @@
   <li>AuthController</li>
 </ul>
 
-| Header 1 | Header 2 | Header 3 |
-|:---------:|:---------:|:---------:|
-| Data 1   | Data 2   | Data 3   |
-| Data 4   | Data 5   | Data 6   |
-
 <div align="center">
 
 |        Controller         |               Method               | Description |
@@ -32,8 +27,10 @@
 | `UserController` | getAll  |    Get all available users.     |
 | `UserController` | getById |    Retrieve the user given the ID.     |
 | `UserController` | create  |    Create a new user.     |
-| `UserController` | update  |    Update data of the selected user (_by id__).    |
+| `UserController` | update  |    Update data of a user.    |
 | `UserController` | delete  |    Soft delete a user given an id.    |
+| `AuthController` | login   |    Create a refresh token if the credentials are valid.    |
+
 
 </div>
 
