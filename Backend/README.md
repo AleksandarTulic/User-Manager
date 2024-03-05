@@ -6,7 +6,7 @@
  
 ## Features
 
-<p>The goal of this Api is to create a user-management system that will, as it's name suggests, manage user accounts of <b>"<i>xy</i>"</b> system. For example let's say you need to create a blog web application, bakery shop, eCommerce or something else, then what I would like to do is just copy this code in that project and continue the development with already existing user management system.</p> 
+<p>The goal of this Api is to create a user-management system that will, as it's name suggests, manage user accounts of <b>"<i>xy</i>"</b> system. The "xy" system can be for example a blog web application, bakery shop, eCommerce web app or something else.</p> 
 
 <p>Api contains following controllers:</p>
 <ul>
