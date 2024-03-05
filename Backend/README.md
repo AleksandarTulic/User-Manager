@@ -54,16 +54,21 @@
 <p>
   I have used the following dependencies:
 </p>
-<ul>
-  <li>slim/slim - version 4.12</li>
-  <li>slim/psr7 - version 1.6</li>
-  <li>illuminate/database - version 10.45</li>
-  <li>symfony/validator - version 7.0</li>
-  <li>php-di/php-di - version 7.0</li>
-  <li>vlucas/valitron - version 1.4</li>
-  <li>predis/predis - version 2.2</li>
-  <li><b>phpunit/phpunit</b> - version 11.0</li>
-</ul>
+
+<div align="center">
+
+|        Name         |               Version               | Required |
+|:-------------------:|:---------------------------------------:|:--------:|
+|       `slim/slim`        | 4.12 |    ✅     |
+|       `slim/psr7`        | 1.6 |    ✅     |
+|   `illuminate/database`   |  10.45  |    ✅     |
+|   `symfony/validator`   |        7.0        |    ✅     |
+|   `php-di/php-di`   |          7.0         |    ✅     |
+|   `vlucas/valitron`   |          1.4          |    ✅     |
+| `predis/predis` |          2.2          |    ✅     |
+| `phpunit/phpunit` |        11.0       |    ❌ - dev dependency     |
+
+</div>
 
 ## Installation
 
