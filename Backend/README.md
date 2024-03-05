@@ -6,10 +6,9 @@
  
 ## Features
 
-<p>The goal of this Api is to create a user-management system that will, as it's name suggests, manage user accounts of <b>"<i>xy</i>"</b> system (<i>the "xy" system is any system that needs management og user accounts</i>).</p> 
 <p>
-  The main purpose of this subsystem is the accelaration of project development. Instead of building a user-management system from scratch i would just copy/paste this code in "xy" project and continue the development of other functionalities that are specific for "xy" project.
-</p>
+  The goal of this Api is to create a user-management system that will, as it's name suggests, manage user accounts of <b>"<i>xy</i>"</b> system (<i>the "xy" system is any system that needs management og user accounts</i>) and accelarate project development. Instead of building a user-management system from scratch i would just copy/paste this code in "xy" project and continue the development of other functionalities that are specific for "xy" project.
+</p> 
 
 <p>Api contains following controllers:</p>
 <ul>
