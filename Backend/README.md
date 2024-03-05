@@ -46,6 +46,18 @@
 | Data 1   | Data 2   | Data 3   |
 | Data 4   | Data 5   | Data 6   |
 
+|     Controller      |               Description               | Required | Default value |                   Limitations                    |
+|:-------------------:|:---------------------------------------:|:--------:|:-------------:|:------------------------------------------------:|
+|       RoleController        | Host on which the API will be available |    ❌     |  `127.0.0.1`  |          If set, can't be empty string           |
+|       RoleController        | Port on which the API will be available |    ❌     |    `8080`     | If set, must be a number between `0` and `65535` |
+|   `ENVIRONNEMENT`   |  Environment in which the API will run  |    ✅     |       ❌       |  Must be `development`, `production` or `test`   |
+|   `DATABASE_HOST`   |        MongoDB database host URL        |    ✅     |       ❌       |              Can't be empty string               |
+|   `DATABASE_PORT`   |          MongoDB database port          |    ❌     |  `undefined`  | If set, must be a number between `0` and `65535` |
+|   `DATABASE_NAME`   |          MongoDB database name          |    ✅     |       ❌       |              Can't be empty string               |
+| `DATABASE_USERNAME` |          MongoDB database user          |    ✅     |       ❌       |              Can't be empty string               |
+| `DATABASE_PASSWORD` |        MongoDB database password        |    ✅     |       ❌       |              Can't be empty string               |
+|    `CORS_ORIGIN`    |           CORS allowed origin           |    ❌     |      `*`      |          If set, can't be empty string           |
+
 |        Name         |               Description               | Required | Default value |                   Limitations                    |
 |:-------------------:|:---------------------------------------:|:--------:|:-------------:|:------------------------------------------------:|
 |       `HOST`        | Host on which the API will be available |    ❌     |  `127.0.0.1`  |          If set, can't be empty string           |
