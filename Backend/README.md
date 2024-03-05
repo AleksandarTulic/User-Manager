@@ -23,7 +23,7 @@
 <div align="center">
 
 |        Controller         |               Method               | Description |
-|:-------------------:|:---------------------------------------:|:--------:|
+|:-------------------:|:---------------------------------------:|:--------|
 |       `RoleController`        | getAll |    Get all available roles (<i>because the api uses soft delete, when retrieveing data we check if role was meant to be deleted</i>).     |
 |       `RoleController`        | getById |    Retrieve the role given the ID.     |
 |   `RoleController`   |  create  |    Create a new role (<i>every role-name needs to be unique - exception is in the case if the user deleted a role and then the user tried to create a role with the same name</i>).     |
