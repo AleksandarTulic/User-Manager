@@ -8,6 +8,10 @@
 
 <p>The goal of this Api is to create a user-management system that will, as it's name suggests, manage user accounts of <b>"<i>xy</i>"</b> system. The "xy" system can be for example a blog web application, bakery shop, eCommerce web app or something else.</p> 
 
+### When I would like to use this subsystem?
+
+<p>123</p>
+
 <p>Api contains following controllers:</p>
 <ul>
   <li>RoleController</li>
