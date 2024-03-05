@@ -46,6 +46,7 @@
 | Data 1   | Data 2   | Data 3   |
 | Data 4   | Data 5   | Data 6   |
 
+<div align="center">
 |     Controller      |               Method               | Description |
 |:-------------------:|:---------------------------------------:|:--------:|
 |       `RoleController`        | getAll |    ❌     |
@@ -57,6 +58,7 @@
 | `DATABASE_USERNAME` |          MongoDB database user          |    ✅     |
 | `DATABASE_PASSWORD` |        MongoDB database password        |    ✅     |
 |    `CORS_ORIGIN`    |           CORS allowed origin           |    ❌     |
+</div>
 
 |        Name         |               Description               | Required | Default value |                   Limitations                    |
 |:-------------------:|:---------------------------------------:|:--------:|:-------------:|:------------------------------------------------:|
