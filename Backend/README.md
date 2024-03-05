@@ -2,6 +2,7 @@
 
 - [Navigation](#navigation)
   - [Features](#features)
+  - [Libraries](#libraries)
   - [Installation](#installation)
  
 ## Features
@@ -47,6 +48,22 @@
 | `DATABASE_USERNAME` |          MongoDB database user          |    ✅     |       ❌       |              Can't be empty string               |
 | `DATABASE_PASSWORD` |        MongoDB database password        |    ✅     |       ❌       |              Can't be empty string               |
 |    `CORS_ORIGIN`    |           CORS allowed origin           |    ❌     |      `*`      |          If set, can't be empty string           |
+
+## Libraries
+
+<p>
+  I have used the following dependencies:
+</p>
+<ul>
+  <li>slim/slim - version 4.12</li>
+  <li>slim/psr7 - version 1.6</li>
+  <li>illuminate/database - version 10.45</li>
+  <li>symfony/validator - version 7.0</li>
+  <li>php-di/php-di - version 7.0</li>
+  <li>vlucas/valitron - version 1.4</li>
+  <li>predis/predis - version 2.2</li>
+  <li><b>phpunit/phpunit</b> - version 11.0</li>
+</ul>
 
 ## Installation
 
