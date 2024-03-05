@@ -10,7 +10,7 @@
 
 ### When I would like to use this subsystem?
 
-<p>123</p>
+<p>I would use this substem for accelerating project development. Instead of building a user-management system from scratch i would just copy/paste this code in "xy" project and continue the development of other functionalities that are specific for "xy" project.</p>
 
 <p>Api contains following controllers:</p>
 <ul>
