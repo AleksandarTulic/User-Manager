@@ -27,6 +27,18 @@
     <td>create</td>
     <td>Creating a new role.</td>
   </tr>
+  
+  <tr>
+    <td>RoleController</td>
+    <td>update</td>
+    <td>Update data of an already existing role.</td>
+  </tr>
+
+  <tr>
+    <td>RoleController</td>
+    <td>delete</td>
+    <td>Delete a role (<i>this is soft delete</i>).</td>
+  </tr>
 </table>
 
 ## Installation
