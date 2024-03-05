@@ -15,11 +15,18 @@
   <li>AuthController</li>
 </ul>
 
+| Header 1 | Header 2 | Header 3 |
+|:---------:|:---------:|:---------:|
+| Data 1   | Data 2   | Data 3   |
+| Data 4   | Data 5   | Data 6   |
+
+<div align="center">
+  
 <table style="width:fit-content">
   <tr>
     <th>Controller</th>
     <th>Method</th>
-    <th>Functionality</th>
+    <th>Description</th>
   </tr>
 
   <tr>
@@ -40,25 +47,6 @@
     <td>Delete a role (<i>this is soft delete</i>).</td>
   </tr>
 </table>
-
-| Header 1 | Header 2 | Header 3 |
-|:---------:|:---------:|:---------:|
-| Data 1   | Data 2   | Data 3   |
-| Data 4   | Data 5   | Data 6   |
-
-<div align="center">
-  
-|     Controller      |               Method               | Description |
-|:-------------------:|:---------------------------------------:|:--------:|
-|       `RoleController`        | getAll |    ❌     |
-|       `RoleController`        | getById |    ❌     |
-|   `RoleController`   |  create  |    Creating a new role.     |
-|   `RoleController`   |        update        |    ✅     |
-|   `RoleController`   |          delete          |    ❌     |
-|   `DATABASE_NAME`   |          MongoDB database name          |    ✅     |
-| `DATABASE_USERNAME` |          MongoDB database user          |    ✅     |
-| `DATABASE_PASSWORD` |        MongoDB database password        |    ✅     |
-|    `CORS_ORIGIN`    |           CORS allowed origin           |    ❌     |
 
 </div>
 
