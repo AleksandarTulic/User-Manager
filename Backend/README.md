@@ -15,7 +15,7 @@
   <li>AuthController</li>
 </ul>
 
-<table style="width:100%">
+<table style="width:100% !important">
   <tr>
     <th>Controller</th>
     <th>Method</th>
