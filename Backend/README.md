@@ -1,17 +1,14 @@
 # UMApi - documentation
 
+<p align="justify">
+  The goal of this Api is to create a user-management system that will, as it's name suggests, manage user accounts of <b>"<i>xy</i>"</b> system (<i>the "xy" system is any system that needs management og user accounts</i>) and accelarate project development. Instead of building a user-management system from scratch i would just copy/paste this code in "xy" project and continue the development of other functionalities that are specific for that project.
+</p> 
+
 - [Navigation](#navigation)
-  - [Features](#features)
   - [Controllers](#controllers)
   - [Middlewares](#middlewares)
   - [Libraries](#libraries)
   - [Installation](#installation)
- 
-## Features
-
-<p align="justify">
-  The goal of this Api is to create a user-management system that will, as it's name suggests, manage user accounts of <b>"<i>xy</i>"</b> system (<i>the "xy" system is any system that needs management og user accounts</i>) and accelarate project development. Instead of building a user-management system from scratch i would just copy/paste this code in "xy" project and continue the development of other functionalities that are specific for that project.
-</p> 
 
 <p>Api contains following controllers:</p>
 <ul>
