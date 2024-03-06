@@ -88,7 +88,10 @@ class ProjectConstants{
 ?>
 ```
 
-<p><b>TOKEN_TTL</b> - variable that declares how long a refresh token lives. If an action fails, it won't be refreshed</p>
+<p><b>ACTIVE_STATE</b> - indicating which DB record is in active state (<i>soft delete</i>).</p>
+<p><b>DISABLED_STATE</b> - indicating which DB record is in disabled state (<i>soft delete</i>).</p>
+<p><b>HMAC_SECRET_KEY</b> - used for creating token signature.</p>
+<p><b>TOKEN_TTL</b> - variable that declares how long a refresh token lives. If an action fails, it won't be refreshed.</p>
 
 ## Libraries
 
