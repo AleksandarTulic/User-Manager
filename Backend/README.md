@@ -39,6 +39,7 @@
 ## Middlewares
 
 <p>Middleware execution order:</p>
+
 ```mermaid
 graph TD;
   StructureMiddleware-->SignatureMiddleware;
