@@ -38,7 +38,7 @@
 
 ## Middlewares
 
-<p>Middleware execution order:</p>
+<p>Execution order:</p>
 
 ```mermaid
 graph TD;
@@ -50,7 +50,7 @@ graph TD;
 ```
 
 > [!NOTE]
-> In the previous diagram i show order of middleware execution if the use is loged in.
+> The diagram provided illustrates the sequence of middleware execution when the user is logged in. If a resource is public, the user request will only traverse through the ResponseJsonMiddleware.
 
 ## Libraries
 
