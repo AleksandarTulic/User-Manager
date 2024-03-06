@@ -38,7 +38,12 @@
 
 ## Middlewares
 
-<p></p>
+```mermaid
+graph TD;
+  StructureMiddleware-->SignatureMiddleware;
+  SignatureMiddleware-->TimeExpirationMiddleware;
+  TimeExpirationMiddleware-->RoleMiddleware;
+```
 
 ## Libraries
 
