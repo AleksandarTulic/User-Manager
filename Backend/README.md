@@ -62,6 +62,32 @@ graph TD;
 > [!IMPORTANT]
 > The diagram provided illustrates the sequence of middleware execution when the user is logged in. If a resource is public, the user request will only traverse through the ResponseJsonMiddleware (<i>as seen previously</i>).
 
+## Constants
+
+<p>Every api constant will be declared in a file called ProjectConsts.php</p>
+
+```php
+<?php 
+
+declare(strict_types=1);
+
+namespace App\Constants;
+
+class ProjectConstants{
+    // ITEM STATES
+    public const ACTIVE_STATE = 3;
+    public const DISABLED_STATE = 9;
+
+    // md5('UserManager')
+    public const HMAC_SECRET_KEY = "5bc60ecde7504983e9906e0f9aa59ed7";
+
+    // 30 minutes
+    public const TOKEN_TTL = 1800;
+}
+
+?>
+```
+
 ## Libraries
 
 <p>
