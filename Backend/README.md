@@ -38,7 +38,17 @@
 
 ## Middlewares
 
-<p>Execution order:</p>
+<p>Execution order (<i>unprotected resource</i>):</p>
+
+```mermaid
+graph TD;
+  XYController-->ResponseJsonMiddleware;
+```
+
+> [!NOTE]
+> The XYController represents placeholder data.
+
+<p>Execution order (<i>protected resource</i>):</p>
 
 ```mermaid
 graph TD;
@@ -49,9 +59,6 @@ graph TD;
   XYController-->RestartExpirationMiddleware;
   RestartExpirationMiddleware-->ResponseJsonMiddleware;
 ```
-
-> [!NOTE]
-> The XYController represents placeholder data.
 
 > [!IMPORTANT]
 > The diagram provided illustrates the sequence of middleware execution when the user is logged in. If a resource is public, the user request will only traverse through the ResponseJsonMiddleware.
