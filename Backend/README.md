@@ -10,6 +10,8 @@
   - [Libraries](#libraries)
   - [Installation](#installation)
 
+## Controllers
+
 <p>Api contains following controllers:</p>
 <ul>
   <li>RoleController</li>
