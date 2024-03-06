@@ -47,6 +47,7 @@ graph TD;
   RoleMiddleware-->RestartExpirationMiddleware;
   RestartExpirationMiddleware-->ResponseJsonMiddleware;
 ```
+
 > [!NOTE]
 > In the previous diagram i show order of middleware execution if the use is loged in.
 
