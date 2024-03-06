@@ -4,12 +4,6 @@
   The goal of this Api is to create a user-management system that will, as it's name suggests, manage user accounts of <b>"<i>xy</i>"</b> system (<i>the "xy" system is any system that needs management og user accounts</i>) and accelarate project development. Instead of building a user-management system from scratch i would just copy/paste this code in "xy" project and continue the development of other functionalities that are specific for that project.
 </p> 
 
-- [Navigation](#navigation)
-  - [Controllers](#controllers)
-  - [Middlewares](#middlewares)
-  - [Libraries](#libraries)
-  - [Installation](#installation)
-
 ## Controllers
 
 <p>Api contains following controllers:</p>
@@ -88,6 +82,21 @@ graph TD;
 | `phpunit/phpunit` |        11.0       |    ❌ - dev dependency     |
 
 </div>
+
+## How does the login really work?
+
+<ol>
+  <li>Client sends username and password to AuthController endpoint</li>
+  <li>Retrieve user record from DB using username (<i>bacause of password-salt</i>)</li>
+  <li>Creating password hash using retrieved salt</li>
+  <li>Check if password hash-es match</li>
+  <li>Client successfully loged in</li>
+  <li>Retrieve user roles from DB</li>
+  <li>Create token using username and client roles</li>
+  <li>Create login record in DB</li>
+  <li>Create login record in Redis DB (<i>here we set expiration to 30 minutes</i>)</li>
+  <li>Return token to the client</li>
+</ol>
 
 ## Installation
 
