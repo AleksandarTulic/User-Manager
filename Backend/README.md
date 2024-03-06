@@ -62,6 +62,9 @@ graph TD;
   RestartExpirationMiddleware-->ResponseJsonMiddleware;
 ```
 
+> [!NOTE]
+> I have planned for the future to create a new Middleware that will check how many times the token has been renewed, and limit that number to let's say 5.
+
 > [!IMPORTANT]
 > The diagram provided illustrates the sequence of middleware execution when the user is logged in. If a resource is public, the user request will only traverse through the ResponseJsonMiddleware (<i>as seen previously</i>).
 
