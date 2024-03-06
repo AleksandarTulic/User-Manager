@@ -88,6 +88,8 @@ class ProjectConstants{
 ?>
 ```
 
+<p><b>TOKEN_TTL</b> - variable that declares how long a refresh token lives. If an action fails, it won't be refreshed</p>
+
 ## Libraries
 
 <p>
