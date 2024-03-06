@@ -45,11 +45,15 @@ graph TD;
   StructureMiddleware-->SignatureMiddleware;
   SignatureMiddleware-->TimeExpirationMiddleware;
   TimeExpirationMiddleware-->RoleMiddleware;
-  RoleMiddleware-->RestartExpirationMiddleware;
+  RoleMiddleware-->XYController;
+  XYController-->RestartExpirationMiddleware;
   RestartExpirationMiddleware-->ResponseJsonMiddleware;
 ```
 
 > [!NOTE]
+> The XYController represents placeholder data.
+
+> [!IMPORTANT]
 > The diagram provided illustrates the sequence of middleware execution when the user is logged in. If a resource is public, the user request will only traverse through the ResponseJsonMiddleware.
 
 ## Libraries
