@@ -1,0 +1,19 @@
+#um-right{
+    position: absolute;
+    top: 0px;
+    left: 185px;
+    width: calc(100% - 185px);
+    min-width: 400px;
+}
+
+#um-left{
+    max-width: 180px;
+    z-index: 5;
+}
+
+@media screen and (max-width: 580px) {
+    #um-right {
+        left: 80px;
+        width: calc(100% - 80px);
+    }
+}
