@@ -8,10 +8,15 @@ import Users from './routes/Users/Users';
 function App() {
   return (
     <Router>
-        <Routes>
-            <Route path="/" element={<Role />} />
-            <Route path="/users" element={<Users />} />
-        </Routes>
+      <div class="container-fluid">
+        <div class="row flex-nowrap">
+          <Header />
+          <Routes>
+              <Route path="/" element={<Role />} />
+              <Route path="/users" element={<Users />} />
+          </Routes>
+        </div>
+      </div>
     </Router>
   );
 }

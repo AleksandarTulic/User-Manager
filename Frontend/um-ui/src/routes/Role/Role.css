@@ -5,15 +5,3 @@ td, th{
 tr{
     border: 1px solid gainsboro !important;
 }
-
-.btn{
-    transition: font-size 0.5s ease;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.btn:hover{
-    font-size: 22px;
-    background-color: rgb(33, 37, 41);
-}

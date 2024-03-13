@@ -2,7 +2,7 @@
     border: 1px solid gainsboro;
     border-radius: 5px;
     margin: 10px;
-    padding: 10px;
+    padding: 15px;
 }
 
 .um-table-ud{
@@ -16,4 +16,16 @@
     background-color: rgb(33, 37, 41) !important;
     color: #ffffff !important;
     font-size: 22px;
+}
+
+.btn{
+    transition: font-size 0.5s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn:hover{
+    font-size: 22px;
+    background-color: rgb(33, 37, 41);
 }
