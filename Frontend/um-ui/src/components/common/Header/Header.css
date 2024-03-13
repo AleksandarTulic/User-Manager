@@ -1,6 +1,30 @@
 #header{
-    max-width: 250px;
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    z-index: 5;
+    width: 20%;
     min-width: 200px;
     height: 100vh;
     background-color: rgb(33, 37, 41);
+    display: flex;
+}
+
+#header > div{
+    flex: 1;
+}
+
+#user-loged-in-container{
+    display: flex;
+    justify-content: center;
+}
+
+.nav-item > a:hover{
+    background-color: #0d6efd;
+}
+
+.nav-item > ul{
+    width: 100%;
+    background-color: rgb(33, 37, 41);
+    color: #ffffff !important;
 }
