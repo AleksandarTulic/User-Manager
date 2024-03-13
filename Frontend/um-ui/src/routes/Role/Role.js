@@ -12,6 +12,11 @@ function Role(){
     }
 
     function deleteRole(){
+        let flag = window.confirm("Are you sure?");
+    
+        if (flag){
+            //delete selected role
+        }
     }
 
     useEffect(() => {
@@ -52,59 +57,14 @@ function Role(){
                                     <td valign='middle'>{item.id}</td>
                                     <td valign='middle'>{item.name}</td>
                                     <td className='' style={{borderLeft: 'none', borderRight: 'none', textAlign: 'end'}} valign='middle'>
-                                        <i className="bg-warning bi bi-arrow-repeat um-table-ud um-table-u"></i>&nbsp;
-                                        <i className="bi bi-trash bg-danger text-white um-table-ud um-table-d"></i>
+                                        <i className="bg-warning bi bi-arrow-repeat um-table-ud um-table-u" onClick={updateRole}></i>&nbsp;
+                                        <i className="bi bi-trash bg-danger text-white um-table-ud um-table-d" onClick={deleteRole}></i>
                                     </td>
                                 </tr>
                             ))
                         }
                     </tbody>
                 </table>
-
-                <div>
-                    asdiausioduasioduasioudioasudioaudaudioausdioausioduaiosduaio
-                    asdiausioduasioduasioudioasudioaudaudioausdioausioduaiosduaio
-                    asdiausioduasioduasioudioasudioaudaudioausdioausioduaiosduaio
-                    asdiausioduasioduasioudioasudioaudaudioausdioausioduaiosduaio
-                    asdiausioduasioduasioudioasudioaudaudioausdioausioduaiosduaio
-                    asdiausioduasioduasioudioasudioaudaudioausdioausioduaiosduaio
-                    asdiausioduasioduasioudioasudioaudaudioausdioausioduaiosduaio
-                    asdiausioduasioduasioudioasudioaudaudioausdioausioduaiosduaio
-                    asdiausioduasioduasioudioasudioaudaudioausdioausioduaiosduaio
-                    asdiausioduasioduasioudioasudioaudaudioausdioausioduaiosduaio
-                    asdiausioduasioduasioudioasudioaudaudioausdioausioduaiosduaio
-                    asdiausioduasioduasioudioasudioaudaudioausdioausioduaiosduaio
-                    asdiausioduasioduasioudioasudioaudaudioausdioausioduaiosduaio
-                    asdiausioduasioduasioudioasudioaudaudioausdioausioduaiosduaio
-                    asdiausioduasioduasioudioasudioaudaudioausdioausioduaiosduaio
-                    asdiausioduasioduasioudioasudioaudaudioausdioausioduaiosduaio
-                    asdiausioduasioduasioudioasudioaudaudioausdioausioduaiosduaio
-                    asdiausioduasioduasioudioasudioaudaudioausdioausioduaiosduaio
-                    asdiausioduasioduasioudioasudioaudaudioausdioausioduaiosduaio
-                    asdiausioduasioduasioudioasudioaudaudioausdioausioduaiosduaio
-                    asdiausioduasioduasioudioasudioaudaudioausdioausioduaiosduaio
-                    asdiausioduasioduasioudioasudioaudaudioausdioausioduaiosduaio
-                    asdiausioduasioduasioudioasudioaudaudioausdioausioduaiosduaio
-                    asdiausioduasioduasioudioasudioaudaudioausdioausioduaiosduaio
-                    asdiausioduasioduasioudioasudioaudaudioausdioausioduaiosduaio
-                    asdiausioduasioduasioudioasudioaudaudioausdioausioduaiosduaio
-                    asdiausioduasioduasioudioasudioaudaudioausdioausioduaiosduaio
-                    asdiausioduasioduasioudioasudioaudaudioausdioausioduaiosduaio
-                    asdiausioduasioduasioudioasudioaudaudioausdioausioduaiosduaio
-                    asdiausioduasioduasioudioasudioaudaudioausdioausioduaiosduaio
-                    asdiausioduasioduasioudioasudioaudaudioausdioausioduaiosduaio
-                    asdiausioduasioduasioudioasudioaudaudioausdioausioduaiosduaio
-                    asdiausioduasioduasioudioasudioaudaudioausdioausioduaiosduaio
-                    asdiausioduasioduasioudioasudioaudaudioausdioausioduaiosduaio
-                    asdiausioduasioduasioudioasudioaudaudioausdioausioduaiosduaio
-                    asdiausioduasioduasioudioasudioaudaudioausdioausioduaiosduaio
-                    asdiausioduasioduasioudioasudioaudaudioausdioausioduaiosduaio
-                    asdiausioduasioduasioudioasudioaudaudioausdioausioduaiosduaio
-                    asdiausioduasioduasioudioasudioaudaudioausdioausioduaiosduaio
-                    asdiausioduasioduasioudioasudioaudaudioausdioausioduaiosduaio
-                    asdiausioduasioduasioudioasudioaudaudioausdioausioduaiosduaio
-                    asdiausioduasioduasioudioasudioaudaudioausdioausioduaiosduaio
-                </div>
             </div>
         </div>
     );
