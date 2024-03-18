@@ -29,7 +29,7 @@ class UserLoginRepository{
 
             $stmt->bindValue(':token', $userLogin->getToken(), PDO::PARAM_STR);
             $stmt->bindValue(':ip', $userLogin->getIp(), PDO::PARAM_STR);
-            $stmt->bindValue(':created_dt', $userLogin->getCreateDT(), PDO::PARAM_STR);
+            $stmt->bindValue(':created_dt', $userLogin->getCreateAt(), PDO::PARAM_STR);
             $stmt->bindValue(':user_id', $userLogin->getUserId(), PDO::PARAM_INT);
             $stmt->execute();
 
