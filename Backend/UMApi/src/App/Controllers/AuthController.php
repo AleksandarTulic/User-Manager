@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Mappers\Mapper;
 use App\Models\DTO\LoginDTO;
+use App\Models\DTO\LoginResponseDTO;
 use App\Models\UserLogin;
 use App\Repositories\LoginRedisRepository;
 use App\Repositories\UserLoginRepository;
@@ -23,33 +24,37 @@ class AuthController{
 
     public function login(Request $request, Response $response):Response{
         $body = $request->getParsedBody();
+        
+        $accessToken = '';
+        $refreshToken = '';
 
         $result = $this->repository->isLogedIn($this->mapper->getMapping($body, LoginDTO::class));
 
         if ($result){
             //create token
             $token = $this->tokenService->createToken($result->getUsername(), $result->getUserRoles());
-            
-            $userLogin = new UserLogin();
-            $userLogin->setIp($_SERVER['REMOTE_ADDR']);
-            $userLogin->setToken($token);
-            $userLogin->setUserId($result->getId());
-            $userLogin->setCreatedDT(date('Y-m-d H:i:s', time()));
+
+            $userLogin = $this->mapper->getMapping([
+                'ip' => $_SERVER['REMOTE_ADDR'],
+                'token' => $token,
+                'userId' => $result->getId(),
+                'createdAt' => date('Y-m-d H:i:s', time())
+            ], UserLogin::class);
 
             //save token/login to DB
             $this->userLoginRepository->create($userLogin);
 
             //save token to redis DB
-            $this->loginRedisRepository->logInUser($result->getUsername(), $token);
+            //$this->loginRedisRepository->logInUser($result->getUsername(), $token);
 
             //add token to response header
             $response = $response->withHeader('Authorization', 'Bearer ' . $token);
 
             //we want the client to see/save token on their local machine
             $result = $token;
+        
+            $response->getBody()->write(json_encode($this->mapper->getMapping(['accessToken' => $token, 'refreshToken' => $token], LoginResponseDTO::class)));
         }
-
-        $response->getBody()->write(json_encode($result));
 
         return $response;
     }
