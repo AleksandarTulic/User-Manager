@@ -138,13 +138,16 @@ class ProjectConstants{
 
 <ul>
   <li>Open cmd</li>
-  <li>Position yourself on "**DOWNLOAD_PATH**/UMApi"</li>
+  <li>Navigate to 'DOWNLOAD_PATH/UMApi</li>
   <li>Execute following command:</li>
 </ul>
 
 ```
 php -S localhost:2500 -t public
 ```
+
+> [!NOTE]
+> DOWNLOAD_PATH = path where you have downloaded the User-Manager project
 
 ### Apache - Virtual Hosts
 
