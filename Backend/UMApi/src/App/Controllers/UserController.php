@@ -14,8 +14,18 @@ class UserController{
                                 private Mapper $mapper){
     }
 
-    public function getAll(Request $request, Response $response) : Response{
-        $arr = $this->repository->getAll();
+    public function getNumberOfRows(Request $request, Response $response) : Response{
+        $result = $this->repository->getNumberOfRows();
+
+        $body = json_encode($result);
+
+        $response->getBody()->write($body);
+
+        return $response;
+    }
+
+    public function getAll(Request $request, Response $response, $offset, $itemsPerPage) : Response{
+        $arr = $this->repository->getAll($offset, $itemsPerPage);
 
         $body = json_encode($arr);
 
