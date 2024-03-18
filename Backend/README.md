@@ -136,8 +136,10 @@ class ProjectConstants{
 
 ### PHP Web Server
 
+This is intended for Windows operating systems.
+
 <ul>
-  <li>Open cmd</li>
+  <li>Open command prompt</li>
   <li>Navigate to 'DOWNLOAD_PATH/UMApi</li>
   <li>Execute following command:</li>
 </ul>
