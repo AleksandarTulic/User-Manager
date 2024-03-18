@@ -64,19 +64,33 @@ class UserRepository{
                 $user->setId($dbUser['id']);
                 
                 $result = $user;
-            } 
+            }
         }catch (PDOException $exc){
+            $result = false;
         }
         
         return $result;
     }
 
-    public function getAll():array{
+    public function getNumberOfRows(){
+        $pdo = $this->db->getConnection();
+
+        $stmt = $pdo->prepare('SELECT count(*) as count FROM users u 
+                               WHERE u.state = :state');
+        $stmt->bindValue(':state', ProjectConstants::ACTIVE_STATE, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function getAll(int $offset = 0, int $itemsPerPage = PHP_INT_MAX):array{
         $pdo = $this->db->getConnection();
 
         $stmt = $pdo->prepare('SELECT u.* FROM users u, sexes s 
-                               WHERE u.sex_id = s.id and u.state = :state');
+                               WHERE u.sex_id = s.id and u.state = :state order by u.id limit :offset, :itemsPerPage');
         $stmt->bindValue(':state', ProjectConstants::ACTIVE_STATE, PDO::PARAM_INT);
+        $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+        $stmt->bindValue(':itemsPerPage', $itemsPerPage, PDO::PARAM_INT);
         $stmt->execute();
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
