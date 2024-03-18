@@ -7,8 +7,26 @@ class UserLogin{
     private int $id;
     private string $token;
     private string $ip;
-    private string $createdDT;
+    private string $createdAt;
     private int $userId;
+
+    public function __construct(string $token = null, string $ip = null, string $createdAt = null, int $userId = null){
+        if ($userId !== null){
+            $this->userId = $userId;
+        }
+
+        if ($createdAt !== null){
+            $this->createdAt = $createdAt;
+        }
+
+        if ($ip !== null){
+            $this->ip = $ip;
+        }
+            
+        if ($token !== null){
+            $this->token = $token;
+        }
+    }
 
     // SETTERS
 
@@ -16,8 +34,8 @@ class UserLogin{
         $this->userId = $userId;
     }
 
-    public function setCreatedDT(string $createdDT){
-        $this->createdDT = $createdDT;
+    public function setCreatedAt(string $createdAt){
+        $this->createdAt = $createdAt;
     }
 
     public function setIp(string $ip){
@@ -46,8 +64,8 @@ class UserLogin{
         return $this->ip;
     }
 
-    public function getCreateDT(){
-        return $this->createdDT;
+    public function getCreateAt(){
+        return $this->createdAt;
     }
 
     public function getUserId(){
