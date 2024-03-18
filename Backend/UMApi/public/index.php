@@ -41,7 +41,8 @@ $app->group('/api', function (RouteCollectorProxy $group){
     $group->put('/roles/{id:[0-9]+}', [RoleController::class, 'update']);
     $group->delete('/roles/{id:[0-9]+}', [RoleController::class, 'delete']);
 
-    $group->get('/users', [UserController::class, 'getAll']);
+    $group->get('/users/{offset:[0-9]+}/{itemsPerPage:[0-9]+}', [UserController::class, 'getAll']);
+    $group->get('/users/count', [UserController::class, 'getNumberOfRows']);
     $group->get('/users/{id:[0-9]+}', [UserController::class, 'getById']);
     $group->post('/users', [UserController::class, 'create']);
     $group->put('/users/{id:[0-9]+}', [UserController::class, 'update']);
