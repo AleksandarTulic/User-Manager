@@ -138,7 +138,7 @@ class ProjectConstants{
 
 <ul>
   <li>Open cmd</li>
-  <li>Position yourself on "_DOWNLOAD_PATH_/UMApi"</li>
+  <li>Position yourself on "**DOWNLOAD_PATH**/UMApi"</li>
   <li>Execute following command:</li>
 </ul>
 
