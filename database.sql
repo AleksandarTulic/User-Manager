@@ -17,8 +17,8 @@ create table `users`(
 	password varchar(512) not null check(length(password)=512),
 	salt varchar(32) not null check(length(salt)=32),
 	state int not null default 3,
-	first_name varchar(100) null check(length(firstName) >= 2),
-	last_name varchar(100) null check(length(lastName) >= 2),
+	first_name varchar(100) null check(length(first_name) >= 2),
+	last_name varchar(100) null check(length(last_name) >= 2),
 	sex_id int null,
 	foreign key (sex_id) references sexes(id) on update cascade on delete restrict,
 	primary key (id)
