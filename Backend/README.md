@@ -153,6 +153,6 @@ php -S localhost:2500 -t public
 
 ### Apache - Virtual Hosts
 
-![](assets/images/xamp-virtual-host.png?raw=true)
+![]([assets/images/xamp-virtual-host.png?raw=true](https://raw.githubusercontent.com/AleksandarTulic/User-Manager/main/assets/images/xamp-virtual-host.png)https://raw.githubusercontent.com/AleksandarTulic/User-Manager/main/assets/images/xamp-virtual-host.png)
 
 To continue ...
