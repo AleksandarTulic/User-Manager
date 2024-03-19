@@ -153,4 +153,6 @@ php -S localhost:2500 -t public
 
 ### Apache - Virtual Hosts
 
+![](assets/images/xamp-virtual-host.png?raw=true)
+
 To continue ...
