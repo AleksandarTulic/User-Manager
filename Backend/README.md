@@ -140,7 +140,7 @@ This is intended for Windows operating systems.
 
 <ul>
   <li>Open command prompt</li>
-  <li>Navigate to __DOWNLOAD_PATH__/UMApi</li>
+  <li>Navigate to **DOWNLOAD_PATH**/UMApi</li>
   <li>Execute following command:</li>
 </ul>
 
