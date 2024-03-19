@@ -1,10 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './Header.css';
 
 function Header(){
     const [flagVisability, setFlagVisability] = useState('');
     const [buttonStyle, setButtonStyle] = useState('');
-    const sidebarRef = useRef(null);
 
     function showHideSidebar(){
         setFlagVisability(flagVisability === '' ? 'sidebar-none' : '');
@@ -33,17 +32,15 @@ function Header(){
             }
         };
     
-        // Initial setup
         window.addEventListener('resize', handleResize);
     
-        // Cleanup
         return () => {
-        window.removeEventListener('resize', handleResize);
+            window.removeEventListener('resize', handleResize);
         };
     },[]);
 
     return (
-        <div id='sidebar' className={flagVisability} ref={sidebarRef}>
+        <div id='sidebar' className={flagVisability}>
             <div id='sidebar-header' className='row'>
                 <div id='sidebar-header-title' className='col-sm-10'>
                     <h4>User Manager</h4>
