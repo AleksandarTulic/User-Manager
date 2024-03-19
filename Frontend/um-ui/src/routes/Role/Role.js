@@ -27,11 +27,14 @@ function Role(){
     function updateRole(){
     }
 
-    function deleteRole(){
+    async function deleteRole(id){
         let flag = window.confirm("Are you sure?");
     
         if (flag){
             //delete selected role
+            const response = await axios.delete('http://umapi.localhost/api/roles/' + id);
+
+            console.log(response);
         }
     }
 
@@ -85,7 +88,7 @@ function Role(){
                                     <td valign='middle'>{item.name}</td>
                                     <td className='' style={{borderLeft: 'none', borderRight: 'none', textAlign: 'end'}} valign='middle'>
                                         <i className="bg-warning bi bi-arrow-repeat um-table-ud um-table-u" onClick={updateRole}></i>&nbsp;
-                                        <i className="bi bi-trash bg-danger text-white um-table-ud um-table-d" onClick={deleteRole}></i>
+                                        <i className="bi bi-trash bg-danger text-white um-table-ud um-table-d" onClick={() => deleteRole(item.id)}></i>
                                     </td>
                                 </tr>
                             ))
