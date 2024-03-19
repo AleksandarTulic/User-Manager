@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './Header.css';
 
 function Header(){
@@ -18,6 +18,29 @@ function Header(){
             }, 500);
         }
     }
+
+    useEffect(() => {
+        const handleResize = () => {
+            setFlagVisability(window.innerWidth >= 600 ? '' :  'sidebar-none');
+
+            if (flagVisability !== ''){
+            
+                setButtonStyle('sidebar-button-disabled');
+            
+                setTimeout(() => {
+                    setButtonStyle('');
+                }, 500);
+            }
+        };
+    
+        // Initial setup
+        window.addEventListener('resize', handleResize);
+    
+        // Cleanup
+        return () => {
+        window.removeEventListener('resize', handleResize);
+        };
+    },[]);
 
     return (
         <div id='sidebar' className={flagVisability} ref={sidebarRef}>

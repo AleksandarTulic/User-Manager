@@ -47,10 +47,9 @@
 }
 
 .sidebar-none #sidebar-button{
-    position: fixed;
-    left: 10px;
-    top: 20px;
-    opacity: 0.65;
+    left: 10px !important;
+    top: 20px !important;
+    opacity: 0.65 !important;
 }
 
 #sidebar-header{
@@ -77,24 +76,6 @@
 }
 
 @media screen and (max-width: 600px) {
-    #sidebar {
-        width: 0%;
-        min-width: 0px;
-        padding: 0px;
-    }
-
-    #sidebar-button{
-        left: 10px;
-    }
-
-    #sidebar-header-title{
-        display: none;
-    }
-
-    #sidebar-body{
-        display: none;
-    }
-
     #body{
         width: 100% !important;
     }
