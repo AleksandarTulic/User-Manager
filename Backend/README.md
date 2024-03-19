@@ -153,4 +153,4 @@ php -S localhost:2500 -t public
 
 ### Apache - Virtual Hosts
 
-![In a single picture](https://raw.githubusercontent.com/shadmazumder/Xcode/master/InOnePicture.png)
+![In a single picture]([https://raw.githubusercontent.com/shadmazumder/Xcode/master/InOnePicture.png](https://raw.githubusercontent.com/AleksandarTulic/User-Manager/main/assets/images/xamp-virtual-host.png)https://raw.githubusercontent.com/AleksandarTulic/User-Manager/main/assets/images/xamp-virtual-host.png)
