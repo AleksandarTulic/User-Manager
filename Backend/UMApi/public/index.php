@@ -3,6 +3,7 @@
 use App\Controllers\AuthController;
 use App\Controllers\RoleController;
 use App\Controllers\UserController;
+use App\Middlewares\CORSMiddleware;
 use App\Middlewares\ResponseJsonMiddleware;
 use App\Middlewares\TokenMiddlewares\RestartExpirationMiddleware;
 use App\Middlewares\TokenMiddlewares\RoleMiddleware;
@@ -14,6 +15,7 @@ use Slim\Factory\AppFactory;
 use DI\ContainerBuilder;
 use Slim\Routing\RouteCollectorProxy;
 use Slim\Handlers\Strategies\RequestResponseArgs;
+use Slim\Exception\HttpNotFoundException;
 
 define('APP_ROOT', dirname(__DIR__));
 require APP_ROOT . '/vendor/autoload.php';
@@ -27,11 +29,17 @@ $app = AppFactory::create();
 $collector = $app->getRouteCollector();
 $collector->setDefaultInvocationStrategy(new RequestResponseArgs);
 
+$app->add(CORSMiddleware::class);
+
 $app->addBodyParsingMiddleware();
 
 //add to every response content-type application/json
 $app->add(ResponseJsonMiddleware::class);
-$app->add(RestartExpirationMiddleware::class);
+//$app->add(RestartExpirationMiddleware::class);
+
+$app->options('/{routes:.+}', function ($request, $response, $args) {
+    return $response;
+});
 
 $app->group('/api', function (RouteCollectorProxy $group){
 
@@ -50,6 +58,10 @@ $app->group('/api', function (RouteCollectorProxy $group){
 
     $group->post('/login', [AuthController::class, 'login']);
 
+});
+
+$app->map(['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], '/{routes:.+}', function ($request, $response) {
+    throw new HttpNotFoundException($request);
 });
 
 $app->run();
