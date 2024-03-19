@@ -29,3 +29,49 @@
     font-size: 22px;
     background-color: rgb(33, 37, 41);
 }
+
+#sidebar{
+    height: 100vh;
+    background-color: orange;
+    width: 15%;
+    min-width: 200px;
+    transition: width 0.5s linear;
+}
+
+#sidebar-header{
+    margin-top: 20px;
+}
+
+#sidebar-button{
+    font-size: 24px;
+    border-radius: 50%;
+    position: relative;
+    top: 0px;
+    left: -4px;
+    background-color: rgb(241, 157, 0);
+    border: none;
+}
+
+#sidebar-button:hover{
+    background-color: azure;
+}
+
+@media screen and (max-width: 600px) {
+    #sidebar {
+        width: 0%;
+        min-width: 0px;
+        padding: 0px;
+    }
+
+    #sidebar-button{
+        left: 10px;
+    }
+
+    #sidebar-header-title{
+        display: none;
+    }
+
+    #sidebar-body{
+        
+    }
+}
