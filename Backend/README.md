@@ -158,4 +158,4 @@ To create a virtual host please add following lines to the httpd-vhosts.conf fil
 <img src="https://raw.githubusercontent.com/AleksandarTulic/User-Manager/main/assets/images/xamp-virtual-host.png" />
 
 > [!NOTE]
-> httpd-vhosts.conf can be found in *XAMP_INSTALL*/apache/conf/extra
+> httpd-vhosts.conf can be found in __XAMP_INSTALL__/apache/conf/extra
