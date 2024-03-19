@@ -31,6 +31,10 @@
 }
 
 #sidebar{
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 10;
     height: 100vh;
     background-color: orange;
     width: max(15%, 200px);
