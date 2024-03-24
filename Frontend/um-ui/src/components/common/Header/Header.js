@@ -1,9 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import './Header.css';
+import { MyContext } from '../../../MyContext';
 
 function Header(){
     const [flagVisability, setFlagVisability] = useState('');
     const [buttonStyle, setButtonStyle] = useState('');
+    const {flagShow, setFlagShow} = useContext(MyContext);
 
     function showHideSidebar(){
         setFlagVisability(flagVisability === '' ? 'sidebar-none' : '');
@@ -39,6 +41,10 @@ function Header(){
         };
     },[]);
 
+    function increaseValue(){
+        setFlagShow(flagShow + 1);
+    }
+
     return (
         <div id='sidebar' className={flagVisability}>
             <div id='sidebar-header' className='row'>
@@ -59,6 +65,10 @@ function Header(){
                     <li>Item 3</li>
                 </ul>
             </div>
+
+            <button onClick={increaseValue}>
+                ASD
+            </button>
         </div>
     );
 }

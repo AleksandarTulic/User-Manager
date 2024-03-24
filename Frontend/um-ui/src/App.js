@@ -5,21 +5,23 @@ import Role from './routes/Role/Role';
 import Header from './components/common/Header/Header';
 import Users from './routes/Users/Users';
 import ResultModal from './components/common/ResultModal/ResultModal';
+import { MyContextProvider } from './MyContext';
 
 function App() {
   return (
     <Router>
       <div class="container-fluid">
         <div class="row flex-nowrap">
-          <Header />
-          <Routes>
-              <Route path="/" element={<Role />} />
-              <Route path="/users" element={<Users />} />
-          </Routes>
+          <MyContextProvider>
+            <ResultModal />
+            <Header />
+            <Routes>
+                <Route path="/" element={<Role />} />
+                <Route path="/users" element={<Users />} />
+            </Routes>
+          </MyContextProvider>
         </div>
       </div>
-
-      <ResultModal />
     </Router>
   );
 }

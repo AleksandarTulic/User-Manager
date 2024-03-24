@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import './ResultModal.css';
+import { MyContext } from '../../../MyContext';
 
 import { Modal } from 'bootstrap';
 
@@ -9,12 +10,14 @@ function ResultModal(){
     const [messageType, setMessageType] = useState(1);
     const closeButtonRef = useRef(null);
     const modalRef = useRef(null);
+    const {flagShow, setFlagShow} = useContext(MyContext);
 
     useEffect(() => {
-        const modalElement = modalRef.current;
-        const modal = new Modal(modalElement);
-        return () => modal.dispose(); // Cleanup when the component unmounts
-    }, []);
+        console.log(flagShow + " " + (flagShow > 0));
+        if (flagShow > 0){
+            showModal();
+        }
+    }, [flagShow]);
 
     function showModal(){
         arrCloseActions.forEach((element) => {
@@ -32,8 +35,6 @@ function ResultModal(){
 
     return (
         <>
-        <button style={{position: 'fixed', left: '300px'}} onClick={showModal}>Click</button>
-        
         <div class="modal" id="result-modal" ref={modalRef}>
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
