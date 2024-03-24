@@ -1,10 +1,16 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import './Role.css';
+import { MyContext } from '../../MyContext';
+import RoleUpdateModal from '../../components/common/Role_components/RoleUpdateModal/RoleUpdateModal';
 
 function Role(){
     const [roles, setRoles] = useState([]);
     const [createRoleName, setCreateRoleName] = useState(null);
+    const {flagShow, setFlagShow} = useContext(MyContext);
+
+    const [updateId, setUpdateId] = useState(null);
+    const [flagUpdateModal, setFlagUpdateModal] = useState(0);
 
     async function addRole(){
         try {
@@ -14,46 +20,70 @@ function Role(){
 
             const response = await axios.post('http://umapi.localhost/api/roles', data);
 
-            if (response.status === 201){
+            if (response.status !== 201){
                 throw new Error('Failed.');
             }
 
-            alert('success');
+            setFlagShow(flagShow + 1);
+
+            fetchData();
         } catch (error) {
             console.error("Failed to create a new role.");
         }
     }
 
-    function updateRole(){
+    async function updateRole(id, updateRoleName){
+        try {
+            const data = {
+                'name': updateRoleName
+            };
+
+            const response = await axios.put('http://umapi.localhost/api/roles/' + id, data);
+
+            if (response.status !== 200){
+                throw new Error('Failed.');
+            }
+
+            setFlagShow(flagShow + 1);
+
+            fetchData();
+        } catch (error) {
+            console.error("Failed to update a role.");
+        }
     }
 
     async function deleteRole(id){
         let flag = window.confirm("Are you sure?");
     
         if (flag){
-            //delete selected role
-            const response = await axios.delete('http://umapi.localhost/api/roles/' + id);
+            try{
+                //delete selected role
+                const response = await axios.delete('http://umapi.localhost/api/roles/' + id);
 
-            console.log(response);
+                if (response.status !== 200){
+                    throw new Error('Failed.');
+                }
+
+                setFlagShow(flagShow + 1);
+
+                fetchData();
+            } catch (error) {
+                console.error("Failed to delete a role.");
+            }
         }
     }
 
+    async function fetchData(){
+        axios.get('http://umapi.localhost/api/roles').then(response => {
+            setRoles(response.data);
+        })
+        .catch(error => {
+            console.error('Error fetching data.')
+        });
+    }
+
     useEffect(() => {
-        const fetchData = async () => {
-            axios.get('http://umapi.localhost/api/roles').then(response => {
-                setRoles(response.data);
-            })
-            .catch(error => {
-                console.error('Error fetching data.')
-            });
-        }
-
         fetchData();
-
-        setRoles([{id: '11892-123-123123-123', name: 'Admin'},
-                  {id: '11892-123-123123-124', name: 'User'},
-                  {id: '11892-123-123123-122', name: 'Admin 1'},
-                  {id: '11892-123-123123-121', name: 'User 1'}]);
     }, []);
 
     return (
@@ -87,7 +117,7 @@ function Role(){
                                     <td valign='middle'>{item.id}</td>
                                     <td valign='middle'>{item.name}</td>
                                     <td className='' style={{borderLeft: 'none', borderRight: 'none', textAlign: 'end'}} valign='middle'>
-                                        <i className="bg-warning bi bi-arrow-repeat um-table-ud um-table-u" onClick={updateRole}></i>&nbsp;
+                                        <i className="bg-warning bi bi-arrow-repeat um-table-ud um-table-u" onClick={() => {setFlagUpdateModal(flagUpdateModal + 1 == Number.MAX_SAFE_INTEGER ? 1 : flagUpdateModal + 1);setUpdateId(item.id)}}></i>&nbsp;
                                         <i className="bi bi-trash bg-danger text-white um-table-ud um-table-d" onClick={() => deleteRole(item.id)}></i>
                                     </td>
                                 </tr>
@@ -96,6 +126,8 @@ function Role(){
                     </tbody>
                 </table>
             </div>
+
+            <RoleUpdateModal id={updateId} flag={flagUpdateModal} selectedRole={roles.filter(t => t.id == updateId)[0]?.name} updateRole={updateRole}/>
         </div>
     );
 }
