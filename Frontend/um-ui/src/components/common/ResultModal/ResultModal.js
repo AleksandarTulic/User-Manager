@@ -13,7 +13,6 @@ function ResultModal(){
     const {flagShow, setFlagShow} = useContext(MyContext);
 
     useEffect(() => {
-        console.log(flagShow + " " + (flagShow > 0));
         if (flagShow > 0){
             showModal();
         }
