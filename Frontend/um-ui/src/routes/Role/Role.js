@@ -13,6 +13,14 @@ function Role(){
     const [flagUpdateModal, setFlagUpdateModal] = useState(0);
 
     async function addRole(){
+        console.log(validate(createRoleName) + " " + createRoleName);
+        if (!validate(createRoleName)){
+            //invalid role name
+            setFlagShow(flagShow + 1);
+
+            return;
+        }
+
         try {
             const data = {
                 'name': createRoleName
@@ -33,6 +41,13 @@ function Role(){
     }
 
     async function updateRole(id, updateRoleName){
+        if (!validate(updateRoleName)){
+            //invalid role name
+            setFlagShow(flagShow + 1);
+
+            return;
+        }
+
         try {
             const data = {
                 'name': updateRoleName
@@ -82,6 +97,16 @@ function Role(){
         });
     }
 
+    function validate(value){
+        if (!value){
+            return false;
+        }
+        
+        let regex = /^[A-Za-z]{1,}[A-Za-z0-9-_]{1,}$/;
+        
+        return regex.test(value);
+    }
+
     useEffect(() => {
         fetchData();
     }, []);
@@ -95,7 +120,7 @@ function Role(){
                 <div className="form-floating mb-3 d-flex">
                     <input type="text" className="form-control" id="floatingInput" placeholder="Admin" onChange={(e) => setCreateRoleName(e.target.value)} />
                     <label>Role name</label>
-                    <button type="button" className="btn btn-success" style={{width: '15%', marginLeft: '10px'}} onClick={addRole}>Add</button>
+                    <button type="button" className="btn btn-success" style={{width: '20%', marginLeft: '10px'}} onClick={addRole}>Add</button>
                 </div>
             </div>
 
