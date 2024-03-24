@@ -40,7 +40,7 @@ class RoleController{
 
         $response->getBody()->write(json_encode($result));
 
-        return $response;
+        return $response->withStatus(201);
     }
 
     public function update(Request $request, Response $response, string $id) : Response{

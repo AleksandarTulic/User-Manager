@@ -13,7 +13,6 @@ function Role(){
     const [flagUpdateModal, setFlagUpdateModal] = useState(0);
 
     async function addRole(){
-        console.log(validate(createRoleName) + " " + createRoleName);
         if (!validate(createRoleName)){
             //invalid role name
             setFlagShow(flagShow + 1);

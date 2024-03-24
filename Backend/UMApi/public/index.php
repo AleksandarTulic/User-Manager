@@ -1,6 +1,7 @@
 <?php
 
 use App\Controllers\AuthController;
+use App\Controllers\GenderController;
 use App\Controllers\RoleController;
 use App\Controllers\UserController;
 use App\Middlewares\CORSMiddleware;
@@ -57,6 +58,8 @@ $app->group('/api', function (RouteCollectorProxy $group){
     $group->delete('/users/{id:[0-9]+}', [UserController::class, 'delete'])->add(RoleMiddleware::class);
 
     $group->post('/login', [AuthController::class, 'login']);
+
+    $group->get('/genders', [GenderController::class, 'getAll']);
 
 });
 
