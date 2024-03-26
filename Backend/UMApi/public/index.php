@@ -30,8 +30,6 @@ $app = AppFactory::create();
 $collector = $app->getRouteCollector();
 $collector->setDefaultInvocationStrategy(new RequestResponseArgs);
 
-$app->add(CORSMiddleware::class);
-
 $app->addBodyParsingMiddleware();
 
 //add to every response content-type application/json
@@ -41,6 +39,8 @@ $app->add(ResponseJsonMiddleware::class);
 $app->options('/{routes:.+}', function ($request, $response, $args) {
     return $response;
 });
+
+$app->add(CORSMiddleware::class);
 
 $app->group('/api', function (RouteCollectorProxy $group){
 

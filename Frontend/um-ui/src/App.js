@@ -16,8 +16,8 @@ function App() {
             <ResultModal />
             <Header />
             <Routes>
-                <Route path="/" element={<Role />} />
-                <Route path="/users" element={<Users />} />
+                <Route path="/roles" element={<Role />} />
+                <Route path="/" element={<Users />} />
             </Routes>
           </MyContextProvider>
         </div>

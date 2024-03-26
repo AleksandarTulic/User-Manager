@@ -125,7 +125,7 @@ class UserRepository{
             $stmt->bindValue(':salt', $user->getSalt(), PDO::PARAM_STR);
             $stmt->bindValue(':first_name', $user->getFirstName(), PDO::PARAM_STR);
             $stmt->bindValue(':last_name', $user->getLastName(), PDO::PARAM_STR);
-            $stmt->bindValue(':sex_id', $user->getSexId(), PDO::PARAM_INT);
+            $stmt->bindValue(':sex_id', $user->getGenderId(), PDO::PARAM_INT);
             $stmt->execute();
 
             $userId = $pdo->lastInsertId();
@@ -172,7 +172,7 @@ class UserRepository{
             $stmt->bindValue(':salt', $user->getSalt(), PDO::PARAM_STR);
             $stmt->bindValue(':first_name', $user->getFirstName(), PDO::PARAM_STR);
             $stmt->bindValue(':last_name', $user->getLastName(), PDO::PARAM_STR);
-            $stmt->bindValue(':sex_id', $user->getSexId(), PDO::PARAM_INT);
+            $stmt->bindValue(':sex_id', $user->getGenderId(), PDO::PARAM_INT);
             $stmt->execute();
 
             $rowsChanged = $stmt->rowCount();

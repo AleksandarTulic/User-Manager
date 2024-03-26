@@ -10,7 +10,7 @@ class User{
     private ?string $salt;
     private ?string $firstName;
     private ?string $lastName;
-    private ?int $sexId;
+    private ?int $genderId;
 
     private ?array $roles;
 
@@ -43,8 +43,8 @@ class User{
         $this->lastName =$lastName;
     }
 
-    public function setSexId(int $sexId):void{
-        $this->sexId =$sexId;
+    public function setGenderId(int $genderId):void{
+        $this->genderId =$genderId;
     }
 
     public function setUserRoles(array $roles):void{
@@ -77,8 +77,8 @@ class User{
         return $this->lastName;
     }
 
-    public function getSexId():int{
-        return $this->sexId;
+    public function getGenderId():int{
+        return $this->genderId;
     }
 
     public function getUserRoles():array{

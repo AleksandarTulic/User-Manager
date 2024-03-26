@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import './Users.css';
 import { MyContext } from '../../MyContext';
 import axios from 'axios';
@@ -9,6 +9,8 @@ function Users(){
 
     const {flagShow, setFlagShow} = useContext(MyContext);
 
+    const [flagShowCreateForm, setFlagShowCreateForm] = useState(true);
+
     const [username, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
     const [firstName, setFirstName] = useState(null);
@@ -17,14 +19,37 @@ function Users(){
 
     const [genders, setGenders] = useState([]);
 
-    function createUser(){
-        if (validate !== ''){
-            return;
+    const createUserForm = useRef(null);
+
+    async function createUser(){
+        let result = validate();
+        if (result !== ''){
+            alert(result);
         }
 
         try{
+            const data = {
+                'username': username,
+                'password': password,
+                'firstName': firstName,
+                'lastName': lastName,
+                'genderId': genderId,
+                'roles': []
+            };
 
+            const response = await axios.post('http://umapi.localhost/api/users', data);
+
+            if (response.status !== 201){
+                throw new Error('Failed.');
+            }
+
+            setFlagShow(flagShow + 1);
+
+            fetchData();
+
+            createUserForm.current.reset();
         } catch (error) {
+            console.error("Failed to create a new user.");
         }
     }
 
@@ -36,6 +61,9 @@ function Users(){
         .catch(error => {
             console.error('Error fetching data.')
         });
+    }
+
+    async function fetchData(){
     }
 
     function validate(){
@@ -77,44 +105,60 @@ function Users(){
         if (!regexLastName.test(lastName)){
             result += 'Invalid last name.';
         }
+
+        return result;
     }
 
     useEffect(() => {
         retrieveGenders();
     }, []);
 
-    useEffect(() => {
-        console.log(genderId);
-    }, [genderId]);
+    const handleSubmit = (event) => {
+        event.preventDefault();
+    };
 
     return (
+        <form onSubmit={handleSubmit} ref={createUserForm}>
         <div class="col-sm-12 py-3" id="um-right">
             <h3 style={{marginLeft: '10px', marginTop: '20px', marginBottom: '20px'}}>User Manager</h3>
             <div className='um-box'>
-                <h4>Create User</h4>
+                <div className='row' style={{padding: "10px",paddingBottom: "0px"}}>
+                    <div className='col-sm-6'>
+                        <h4>Create User</h4>
+                    </div>
 
-                <div className='um-box'>
+                    <div className='col-sm-6 d-flex justify-content-end'>
+                        {
+                            flagShowCreateForm ? 
+                                <i class="bi bi-chevron-double-down" onClick={() => setFlagShowCreateForm(false)}></i>
+                                    :
+                                <i class="bi bi-chevron-double-up" onClick={() => setFlagShowCreateForm(true)}></i>
+                        }
+                    </div>
+                </div>
+
+                <div className='um-box' style={{display: flagShowCreateForm ? 'none' : 'block'}}>
                     <h6>Account info</h6>
                     <div className="form-floating mb-3 d-flex">
-                        <input type="text" className="form-control" placeholder="Username" requried/>
+                        <input type="text" className="form-control" placeholder="Username" requried onChange={(e) => setUsername(e.target.value)}/>
                         <label for="floatingInput">Username</label>
                     </div>
 
                     <div className="form-floating mb-3 d-flex">
-                        <input type="password" className="form-control" placeholder="Password" requried />
+                        <input type="password" className="form-control" placeholder="Password" requried onChange={(e) => setPassword(e.target.value)}/>
                         <label for="floatingInput">Password</label>
                     </div>
                 </div>
 
-                <div className='um-box'>
+                <div className='um-box' style={{display: flagShowCreateForm ? 'none' : 'block'}}>
                     <h6>Personal info</h6>
                     <div className="form-floating mb-3 d-flex">
-                        <input type="text" className="form-control" placeholder="First name" requried/>
+                        <input type="text" className="form-control" placeholder="First name" requried onChange={(e) => setFirstName(e.target.value)} />
                         <label for="floatingInput">First name</label>
                     </div>
 
                     <div className="form-floating mb-3 d-flex">
-                        <input type="text" className="form-control" placeholder="Last name" requried />
+                        <input type="text" className="form-control" placeholder="Last name" requried onChange={(e) => setLastName(e.target.value)} />
                         <label for="floatingInput">Last name</label>
                     </div>
 
@@ -129,13 +173,14 @@ function Users(){
                     </div>
                 </div>
 
-                <div className="mb-3 d-flex justify-content-end">
+                <div className={(flagShowCreateForm ? "" : "d-flex ") + "justify-content-end"} style={{padding: "10px", paddingBottom: "0px", display: 'none'}}>
                     <button className='btn btn-success' onClick={createUser}>
                         Add
                     </button>
                 </div>
             </div>
         </div>
+        </form>
     );
 }
 

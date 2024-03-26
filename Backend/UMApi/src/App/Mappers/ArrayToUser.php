@@ -37,8 +37,8 @@ class ArrayToUser implements IMapper{
         if (array_key_exists('lastName', $body))
             $user->setLastName($body['lastName']);
 
-        if (array_key_exists('sexId', $body))
-            $user->setSexId($body['sexId']);
+        if (array_key_exists('genderId', $body))
+            $user->setGenderId($body['genderId']);
 
         if (array_key_exists('roles', $body))
             $user->setUserRoles($body['roles']);
