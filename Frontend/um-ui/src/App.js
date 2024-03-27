@@ -10,8 +10,8 @@ import { MyContextProvider } from './MyContext';
 function App() {
   return (
     <Router>
-      <div class="container-fluid">
-        <div class="row flex-nowrap">
+      <div className="container-fluid">
+        <div>
           <MyContextProvider>
             <ResultModal />
             <Header />

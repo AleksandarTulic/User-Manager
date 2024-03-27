@@ -3,6 +3,9 @@ import './Users.css';
 import { MyContext } from '../../MyContext';
 import axios from 'axios';
 
+import { BASE_URL, PER_PAGE } from '../../ProjectConsts';
+import UserList from '../../components/UserList/UserList';
+
 //Template taken from: https://dev.to/codeply/bootstrap-5-sidebar-examples-38pb
 
 function Users(){
@@ -16,10 +19,13 @@ function Users(){
     const [firstName, setFirstName] = useState(null);
     const [lastName, setLastName] = useState(null);
     const [genderId, setGenderId] = useState(null);
+    const [rolesId, setRolesId] = useState([]);
 
     const [genders, setGenders] = useState([]);
+    const [roles, setRoles] = useState([]);
 
     const createUserForm = useRef(null);
+    const createUserFormMLButton = useRef(null);
 
     async function createUser(){
         let result = validate();
@@ -37,7 +43,7 @@ function Users(){
                 'roles': []
             };
 
-            const response = await axios.post('http://umapi.localhost/api/users', data);
+            const response = await axios.post(BASE_URL  + 'users', data);
 
             if (response.status !== 201){
                 throw new Error('Failed.');
@@ -45,7 +51,7 @@ function Users(){
 
             setFlagShow(flagShow + 1);
 
-            fetchData();
+            //fetchData();
 
             createUserForm.current.reset();
         } catch (error) {
@@ -54,7 +60,7 @@ function Users(){
     }
 
     async function retrieveGenders(){
-        axios.get('http://umapi.localhost/api/genders').then(response => {
+        axios.get(BASE_URL + 'genders').then(response => {
             setGenders(response.data);
             setGenderId(response.data[0].id);
         })
@@ -63,7 +69,13 @@ function Users(){
         });
     }
 
-    async function fetchData(){
+    async function retrieveRoles(){
+        axios.get(BASE_URL + 'roles').then(response => {
+            setRoles(response.data);
+        })
+        .catch(error => {
+            console.error('Error fetching data.')
+        });
     }
 
     function validate(){
@@ -109,31 +121,34 @@ function Users(){
         return result;
     }
 
-    useEffect(() => {
-        retrieveGenders();
-    }, []);
-
     const handleSubmit = (event) => {
         event.preventDefault();
     };
 
+    function createUserFormShowMore(){
+        setFlagShowCreateForm(!flagShowCreateForm);
+
+        createUserFormMLButton.current.classList.toggle('rotate');
+    }
+
+    useEffect(() => {
+        retrieveGenders();
+        retrieveRoles();
+    }, []);
+
     return (
+        <div className='row' style={{minWidth: "500px"}}>
         <form onSubmit={handleSubmit} ref={createUserForm}>
         <div class="col-sm-12 py-3" id="um-right">
             <h3 style={{marginLeft: '10px', marginTop: '20px', marginBottom: '20px'}}>User Manager</h3>
             <div className='um-box'>
                 <div className='row' style={{padding: "10px",paddingBottom: "0px"}}>
-                    <div className='col-sm-6'>
+                    <div className='col-6'>
                         <h4>Create User</h4>
                     </div>
 
-                    <div className='col-sm-6 d-flex justify-content-end'>
-                        {
-                            flagShowCreateForm ? 
-                                <i class="bi bi-chevron-double-down" onClick={() => setFlagShowCreateForm(false)}></i>
-                                    :
-                                <i class="bi bi-chevron-double-up" onClick={() => setFlagShowCreateForm(true)}></i>
-                        }
+                    <div className='col-6 d-flex justify-content-end'>
+                        <i ref={createUserFormMLButton} class="bi bi-chevron-double-down um-box-ml" onClick={() => createUserFormShowMore()}></i>
                     </div>
                 </div>
 
@@ -171,6 +186,16 @@ function Users(){
                             }
                         </select>
                     </div>
+
+                    <div className="mb-3">
+                        <select className='form-select'>
+                            {
+                                roles.map((element) => (
+                                    <option key={element.id} value={element.id}>{element.name}</option>
+                                ))
+                            }
+                        </select>
+                    </div>
                 </div>
 
                 <div className={(flagShowCreateForm ? "" : "d-flex ") + "justify-content-end"} style={{padding: "10px", paddingBottom: "0px", display: 'none'}}>
@@ -181,6 +206,11 @@ function Users(){
             </div>
         </div>
         </form>
+
+        <div className='col-sm-12'>
+            <UserList />
+        </div>
+        </div>
     );
 }
 

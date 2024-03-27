@@ -88,3 +88,18 @@
 #body{
     width: calc(75% - 24px);
 }
+
+/*
+
+    um - UserManager
+    ml - more/less
+
+*/
+.um-box-ml{
+    transition: transform 0.5s ease;
+    transform-origin: 50%  35%;
+}
+
+.um-box-ml.rotate{
+    transform: rotate(-180deg);
+}

@@ -3,6 +3,7 @@ import axios from 'axios';
 import './Role.css';
 import { MyContext } from '../../MyContext';
 import RoleUpdateModal from '../../components/common/Role_components/RoleUpdateModal/RoleUpdateModal';
+import { BASE_URL } from '../../ProjectConsts';
 
 function Role(){
     const [roles, setRoles] = useState([]);
@@ -25,7 +26,7 @@ function Role(){
                 'name': createRoleName
             };
 
-            const response = await axios.post('http://umapi.localhost/api/roles', data);
+            const response = await axios.post(BASE_URL + 'roles', data);
 
             if (response.status !== 201){
                 throw new Error('Failed.');
@@ -52,7 +53,7 @@ function Role(){
                 'name': updateRoleName
             };
 
-            const response = await axios.put('http://umapi.localhost/api/roles/' + id, data);
+            const response = await axios.put(BASE_URL + 'roles/' + id, data);
 
             if (response.status !== 200){
                 throw new Error('Failed.');
@@ -72,7 +73,7 @@ function Role(){
         if (flag){
             try{
                 //delete selected role
-                const response = await axios.delete('http://umapi.localhost/api/roles/' + id);
+                const response = await axios.delete(BASE_URL + 'roles/' + id);
 
                 if (response.status !== 200){
                     throw new Error('Failed.');
@@ -88,7 +89,7 @@ function Role(){
     }
 
     async function fetchData(){
-        axios.get('http://umapi.localhost/api/roles').then(response => {
+        axios.get(BASE_URL + 'roles').then(response => {
             setRoles(response.data);
         })
         .catch(error => {

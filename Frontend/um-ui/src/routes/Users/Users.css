@@ -1,9 +1,1 @@
-.uu1{
-    max-height: 1000px; /* Adjust to your maximum desired height */
-}
 
-.uu2{
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 1s linear;
-}
