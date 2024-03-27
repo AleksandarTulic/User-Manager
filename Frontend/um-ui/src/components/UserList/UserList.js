@@ -6,13 +6,14 @@ import { useEffect, useState } from 'react';
 function UserList(){
 
     const [users, setUsers] = useState([]);
-    const [numberOfPages, setNumberOfPages] = useState([]);
+    const [numberOfPages, setNumberOfPages] = useState(0);
+    const [currPage, setCurrPage] = useState(1);
+    const [prevPage, setPrevPage] = useState(null);
+    const [nextPage, setNextPage] = useState(null);
     const [perPage, setPerPage] = useState(PER_PAGE);
 
     async function fetchData(offset = 0){
         axios.get(BASE_URL + 'users/' + offset + "/" + perPage).then(response => {
-            console.log(response.data);
-
             setUsers(response.data);
         })
         .catch(error => {
@@ -23,11 +24,20 @@ function UserList(){
 
     async function fetchNumberOfRows(){
         axios.get(BASE_URL + 'users/count').then(response => {
-            setNumberOfPages(response.data.count / perPage);
+            setNumberOfPages(Math.ceil(response.data.count / perPage));
         })
         .catch(error => {
             console.error('Error fetching data.')
         });
+    }
+
+    function getPreviousPage(){
+        setCurrPage(currPage === 1 ? 1 : currPage - 1);
+    }
+
+    function getNextPage(){
+        console.log(currPage + " " + numberOfPages);
+        setCurrPage(currPage === numberOfPages ? currPage : currPage + 1);
     }
 
     useEffect(() => {
@@ -35,8 +45,20 @@ function UserList(){
     }, []);
 
     useEffect(() => {
+        fetchNumberOfRows();
         fetchData();
     }, [perPage]);
+
+    useEffect(() => {
+        setPrevPage(currPage === 1 ? null : currPage - 1);
+        setNextPage(currPage === numberOfPages ? null : currPage + 1);
+    }, [numberOfPages]);
+
+    useEffect(() => {
+        setPrevPage(currPage === 1 ? null : currPage - 1);
+        setNextPage(currPage === numberOfPages ? null : currPage + 1);
+        fetchData(perPage * (currPage - 1));
+    }, [currPage]);
 
     return (
         <div className='um-box'>
@@ -76,13 +98,22 @@ function UserList(){
             </table>
 
             <div className='row mt-3 flex-row-reverse'>
-                <div className='col-6 d-flex justify-content-end'>
-                    <i className="bi bi-chevron-double-left p-2" style={{backgroundColor: "red"}}></i>
-                    <span className='p-2 ps-3 pe-3 d-flex justify-content-center' style={{backgroundColor: "blue"}}>1</span>
-                    <i class="bi bi-chevron-double-right p-2"></i>
-                </div>
+                {
+                    users.length > 0 &&
+                    <div className='col-6 d-flex justify-content-end'>
+                        <i className={"bi bi-chevron-double-left p-2 " + (prevPage == null ? 'um-pagination-disabled' : 'um-pagination-button')} onClick={getPreviousPage}></i>
+                        {
+                            prevPage && <span className='p-2 ps-3 pe-3 d-flex justify-content-center um-pagination-button border border-0 border-top border-end border-bottom'>{prevPage}</span>
+                        }
+                        <span className='p-2 ps-3 pe-3 d-flex justify-content-center um-pagination-button um-pagination-active border border-0 border-top border-end border-bottom'>{currPage}</span>
+                        {
+                            nextPage && <span className='p-2 ps-3 pe-3 d-flex justify-content-center um-pagination-button border border-0 border-top border-end border-bottom'>{nextPage}</span>
+                        }
+                        <i className={"bi bi-chevron-double-right p-2 border border-0 border-top border-end border-bottom " + (nextPage == null ? 'um-pagination-disabled' : 'um-pagination-button')} onClick={getNextPage}></i>
+                    </div>
+                }  
 
-                <div className='col-6 d-flex justify-content-start'>
+                <div className={(users.length > 0 ? 'col-6' : '') + ' d-flex justify-content-start'}>
                     <span className='d-flex justify-content-center align-items-center'>Rows: </span>&nbsp;
                     <input type="number" className="form-control" placeholder="Number of rows" defaultValue={PER_PAGE} min={PER_PAGE_MIN} max={PER_PAGE_MAX} onChange={(e) => {
                         if (e.target.value < PER_PAGE_MIN && e.target.value > PER_PAGE_MAX){

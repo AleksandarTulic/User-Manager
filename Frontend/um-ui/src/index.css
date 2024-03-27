@@ -103,3 +103,38 @@
 .um-box-ml.rotate{
     transform: rotate(-180deg);
 }
+
+/*
+
+    PAGINATION ELEMENTS
+
+*/
+
+.um-pagination-button{
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
+    font-size: 20px;
+    border: 1px solid gainsboro;
+    cursor: pointer;
+    transition: background-color 0.2s linear;
+}
+
+.um-pagination-button:hover{
+    background-color: gainsboro;
+    color: #ffffff;
+}
+
+.um-pagination-disabled{
+    background-color: gainsboro;
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
+    font-size: 20px;
+    border: 1px solid gainsboro;
+    cursor: auto;
+    color: rgb(185, 185, 185);
+}
+
+.um-pagination-active{
+    background-color: gainsboro;
+    font-weight: bold;
+}
