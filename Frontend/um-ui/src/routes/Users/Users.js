@@ -3,8 +3,9 @@ import './Users.css';
 import { MyContext } from '../../MyContext';
 import axios from 'axios';
 
-import { BASE_URL, PER_PAGE } from '../../ProjectConsts';
+import { BASE_URL } from '../../ProjectConsts';
 import UserList from '../../components/UserList/UserList';
+import RoleUpdateModal from '../../components/common/Role_components/RoleUpdateModal/RoleUpdateModal';
 
 //Template taken from: https://dev.to/codeply/bootstrap-5-sidebar-examples-38pb
 
@@ -13,13 +14,16 @@ function Users(){
     const {flagShow, setFlagShow} = useContext(MyContext);
 
     const [flagShowCreateForm, setFlagShowCreateForm] = useState(true);
+    const [flagShowUpdateModal, setFlagShowUpdateModal] = useState(1);
+    const [selectedForUpdate, setSelectedForUpdate] = useState({});
 
     const [username, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
     const [firstName, setFirstName] = useState(null);
     const [lastName, setLastName] = useState(null);
     const [genderId, setGenderId] = useState(null);
-    const [rolesId, setRolesId] = useState([]);
+    const [role, setRole] = useState(null);
+    const [selectedRoles, setSelectedRoles] = useState([]);
 
     const [genders, setGenders] = useState([]);
     const [roles, setRoles] = useState([]);
@@ -72,6 +76,7 @@ function Users(){
     async function retrieveRoles(){
         axios.get(BASE_URL + 'roles').then(response => {
             setRoles(response.data);
+            setRole(response.data[0]);
         })
         .catch(error => {
             console.error('Error fetching data.')
@@ -138,78 +143,113 @@ function Users(){
 
     return (
         <div className='row' style={{minWidth: "500px"}}>
-        <form onSubmit={handleSubmit} ref={createUserForm}>
-        <div class="col-sm-12 py-3" id="um-right">
-            <h3 style={{marginLeft: '10px', marginTop: '20px', marginBottom: '20px'}}>User Manager</h3>
-            <div className='um-box'>
-                <div className='row' style={{padding: "10px",paddingBottom: "0px"}}>
-                    <div className='col-6'>
-                        <h4>Create User</h4>
-                    </div>
+            <form onSubmit={handleSubmit} ref={createUserForm}>
+                <div class="col-sm-12 py-3" id="um-right">
+                    <h3 style={{marginLeft: '10px', marginTop: '20px', marginBottom: '20px'}}>User Manager</h3>
+                    <div className='um-box'>
+                        <div className='row' style={{padding: "10px",paddingBottom: "0px"}}>
+                            <div className='col-6'>
+                                <h4>Create User</h4>
+                            </div>
 
-                    <div className='col-6 d-flex justify-content-end'>
-                        <i ref={createUserFormMLButton} class="bi bi-chevron-double-down um-box-ml" onClick={() => createUserFormShowMore()}></i>
-                    </div>
-                </div>
+                            <div className='col-6 d-flex justify-content-end'>
+                                <i ref={createUserFormMLButton} class="bi bi-chevron-double-down um-box-ml" onClick={() => createUserFormShowMore()}></i>
+                            </div>
+                        </div>
 
-                <div className='um-box' style={{display: flagShowCreateForm ? 'none' : 'block'}}>
-                    <h6>Account info</h6>
-                    <div className="form-floating mb-3 d-flex">
-                        <input type="text" className="form-control" placeholder="Username" requried onChange={(e) => setUsername(e.target.value)}/>
-                        <label for="floatingInput">Username</label>
-                    </div>
+                        <div className='um-box' style={{display: flagShowCreateForm ? 'none' : 'block'}}>
+                            <h6>Account info</h6>
+                            <div className="form-floating mb-3 d-flex">
+                                <input type="text" className="form-control" placeholder="Username" requried onChange={(e) => setUsername(e.target.value)}/>
+                                <label for="floatingInput">Username</label>
+                            </div>
 
-                    <div className="form-floating mb-3 d-flex">
-                        <input type="password" className="form-control" placeholder="Password" requried onChange={(e) => setPassword(e.target.value)}/>
-                        <label for="floatingInput">Password</label>
-                    </div>
-                </div>
+                            <div className="form-floating mb-3 d-flex">
+                                <input type="password" className="form-control" placeholder="Password" requried onChange={(e) => setPassword(e.target.value)}/>
+                                <label for="floatingInput">Password</label>
+                            </div>
+                        </div>
 
-                <div className='um-box' style={{display: flagShowCreateForm ? 'none' : 'block'}}>
-                    <h6>Personal info</h6>
-                    <div className="form-floating mb-3 d-flex">
-                        <input type="text" className="form-control" placeholder="First name" requried onChange={(e) => setFirstName(e.target.value)} />
-                        <label for="floatingInput">First name</label>
-                    </div>
+                        <div className='um-box' style={{display: flagShowCreateForm ? 'none' : 'block'}}>
+                            <h6>Personal info</h6>
+                            <div className="form-floating mb-3 d-flex">
+                                <input type="text" className="form-control" placeholder="First name" requried onChange={(e) => setFirstName(e.target.value)} />
+                                <label for="floatingInput">First name</label>
+                            </div>
 
-                    <div className="form-floating mb-3 d-flex">
-                        <input type="text" className="form-control" placeholder="Last name" requried onChange={(e) => setLastName(e.target.value)} />
-                        <label for="floatingInput">Last name</label>
-                    </div>
+                            <div className="form-floating mb-3 d-flex">
+                                <input type="text" className="form-control" placeholder="Last name" requried onChange={(e) => setLastName(e.target.value)} />
+                                <label for="floatingInput">Last name</label>
+                            </div>
 
-                    <div className="mb-3">
-                        <select className='form-select' value={genderId} onChange={(e) => setGenderId(e.target.value)}>
+                            <div className="mb-3">
+                                <select className='form-select' value={genderId} onChange={(e) => setGenderId(e.target.value)}>
+                                    {
+                                        genders.map((element) => (
+                                            <option key={element.id} value={element.id}>{element.name}</option>
+                                        ))
+                                    }
+                                </select>
+                            </div>
+
                             {
-                                genders.map((element) => (
-                                    <option key={element.id} value={element.id}>{element.name}</option>
-                                ))
-                            }
-                        </select>
-                    </div>
+                            role && <div className="mb-3 um-box">
+                                <h5>Roles</h5>
+                                <div className='d-flex'>
+                                    <select className='form-select' value={role.id} onChange={(e) => setRole(roles.filter(t => t.id == e.target.value)[0])}>
+                                        {
+                                            roles.map((element) => (
+                                                <option key={element.id} value={element.id}>{element.name}</option>
+                                            ))
+                                        }
+                                    </select>
 
-                    <div className="mb-3">
-                        <select className='form-select'>
-                            {
-                                roles.map((element) => (
-                                    <option key={element.id} value={element.id}>{element.name}</option>
-                                ))
+                                    <button className='ms-2 btn btn-success' onClick={() => {
+                                        if (selectedRoles.filter(t => t.id == role.id).length >= 0){
+                                            setSelectedRoles([...selectedRoles, {
+                                                'id': role.id,
+                                                'name': role.name
+                                            }]);
+                                        }
+                                    }}>
+                                        Add
+                                    </button>
+                                </div>
+
+                                <div className='um-box' style={{margin: '0px', marginTop: '10px'}}>
+                                    {
+                                        selectedRoles.map((element, index) => (
+                                            <span key={index} className={'p-2 user-roles ms-1'} style={{borderRadius: '10px'}}>
+                                                {element.name}&nbsp;
+                                                <i class="bi bi-x-circle"></i>
+                                            </span>
+                                        ))
+                                    }
+                                </div>
+                            </div>
                             }
-                        </select>
+                        </div>
+
+                        <div className={(flagShowCreateForm ? "" : "d-flex ") + "justify-content-end"} style={{padding: "10px", paddingBottom: "0px", display: 'none'}}>
+                            <button className='btn btn-success' onClick={createUser}>
+                                Add
+                            </button>
+                        </div>
                     </div>
                 </div>
+            </form>
 
-                <div className={(flagShowCreateForm ? "" : "d-flex ") + "justify-content-end"} style={{padding: "10px", paddingBottom: "0px", display: 'none'}}>
-                    <button className='btn btn-success' onClick={createUser}>
-                        Add
-                    </button>
-                </div>
+            <div className='col-sm-12'>
+                <UserList selectedUser={selectedForUpdate} setSelectedUser={setSelectedForUpdate} flagShowUpdate={flagShowUpdateModal} setFlagShowUpdate={setFlagShowUpdateModal} />
             </div>
-        </div>
-        </form>
 
-        <div className='col-sm-12'>
-            <UserList />
-        </div>
+            <RoleUpdateModal 
+                genders={genders}
+                roles={roles}
+                selectedUser={selectedForUpdate} 
+                flagShow={flagShowUpdateModal} 
+                setFlagShow={setFlagShowUpdateModal} 
+            />
         </div>
     );
 }

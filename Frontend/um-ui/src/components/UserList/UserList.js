@@ -2,8 +2,9 @@ import './UserList.css';
 import axios from 'axios';
 import { BASE_URL, PER_PAGE, PER_PAGE_MAX, PER_PAGE_MIN } from '../../ProjectConsts';
 import { useEffect, useState } from 'react';
+import { PropaneSharp } from '@mui/icons-material';
 
-function UserList(){
+function UserList(props){
 
     const [users, setUsers] = useState([]);
     const [numberOfPages, setNumberOfPages] = useState(0);
@@ -86,7 +87,10 @@ function UserList(){
                                 <td>{element.sex_id}</td>
                                 <td>
                                     <div className='d-flex justify-content-end'>
-                                            <i className="bg-warning bi bi-arrow-repeat um-table-ud um-table-u"></i>
+                                            <i onClick={() => {
+                                                props.setSelectedUser(element);
+                                                props.setFlagShowUpdate(props.flagShowUpdate + 1);
+                                            }} className="bg-warning bi bi-arrow-repeat um-table-ud um-table-u"></i>
                                             &nbsp;
                                             <i className="bi bi-trash bg-danger text-white um-table-ud um-table-d"></i>
                                     </div>

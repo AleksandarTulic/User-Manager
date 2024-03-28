@@ -1,1 +1,14 @@
+.bi-x-circle:hover{
+    background-color: rgb(33, 37, 41);
+    padding: 1px;
+    color: #ffffff;
+    border-radius: 3px;
+}
 
+.bi-x-circle{
+    transition: background-color 0.15s linear;
+}
+
+.user-roles{
+    background-color: gainsboro;
+}
