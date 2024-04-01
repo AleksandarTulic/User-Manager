@@ -5,6 +5,13 @@
     padding: 15px;
 }
 
+.um-box-shadow{
+    box-shadow: -3px -3px 5px 2px rgba(0, 0, 0, 0.05), 
+                3px -3px 5px 2px rgba(0, 0, 0, 0.05), 
+                -3px 3px 5px 2px rgba(0, 0, 0, 0.05), 
+                3px 3px 5px 2px rgba(0, 0, 0, 0.05);
+}
+
 .um-table-ud{
     padding: 4px !important;
     border-radius: 3px;
