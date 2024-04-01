@@ -2,7 +2,6 @@ import './UserList.css';
 import axios from 'axios';
 import { BASE_URL, PER_PAGE, PER_PAGE_MAX, PER_PAGE_MIN } from '../../ProjectConsts';
 import { useEffect, useState } from 'react';
-import { PropaneSharp } from '@mui/icons-material';
 
 function UserList(props){
 
@@ -37,8 +36,11 @@ function UserList(props){
     }
 
     function getNextPage(){
-        console.log(currPage + " " + numberOfPages);
         setCurrPage(currPage === numberOfPages ? currPage : currPage + 1);
+    }
+
+    function getPage(index){
+        setCurrPage(index);
     }
 
     useEffect(() => {
@@ -62,7 +64,7 @@ function UserList(props){
     }, [currPage]);
 
     return (
-        <div className='um-box'>
+        <div className='um-box um-box-shadow'>
             <h4>Users</h4>
             <table>
                 <thead>
@@ -105,16 +107,28 @@ function UserList(props){
                 {
                     users.length > 0 &&
                     <div className='col-6 d-flex justify-content-end'>
-                        <i className={"bi bi-chevron-double-left p-2 " + (prevPage == null ? 'um-pagination-disabled' : 'um-pagination-button')} onClick={getPreviousPage}></i>
-                        {
-                            prevPage && <span className='p-2 ps-3 pe-3 d-flex justify-content-center um-pagination-button border border-0 border-top border-end border-bottom'>{prevPage}</span>
-                        }
-                        <span className='p-2 ps-3 pe-3 d-flex justify-content-center um-pagination-button um-pagination-active border border-0 border-top border-end border-bottom'>{currPage}</span>
-                        {
-                            nextPage && <span className='p-2 ps-3 pe-3 d-flex justify-content-center um-pagination-button border border-0 border-top border-end border-bottom'>{nextPage}</span>
-                        }
-                        <i className={"bi bi-chevron-double-right p-2 border border-0 border-top border-end border-bottom " + (nextPage == null ? 'um-pagination-disabled' : 'um-pagination-button')} onClick={getNextPage}></i>
-                    </div>
+                    <i className={"bi bi-chevron-double-left p-2 " + (prevPage == null ? 'um-pagination-disabled' : 'um-pagination-button')} onClick={getPreviousPage}></i>
+                    {
+                        prevPage > 1 && prevPage && <span onClick={() => getPage(1)} className='p-2 ps-3 pe-3 d-flex justify-content-center um-pagination-button border border-0 border-top border-end border-bottom'>1</span>
+                    }
+                    {
+                        prevPage > 1 && prevPage && <span className='p-1'>...</span>
+                    }
+                    {
+                        prevPage && <span onClick={() => getPage(prevPage)} className='p-2 ps-3 pe-3 d-flex justify-content-center um-pagination-button border border-0 border-top border-end border-bottom'>{prevPage}</span>
+                    }
+                    <span className='p-2 ps-3 pe-3 d-flex justify-content-center um-pagination-button um-pagination-active border border-0 border-top border-end border-bottom'>{currPage}</span>
+                    {
+                        nextPage && <span onClick={() => getPage(nextPage)} className='p-2 ps-3 pe-3 d-flex justify-content-center um-pagination-button border border-0 border-top border-end border-bottom'>{nextPage}</span>
+                    }
+                    {
+                        nextPage < numberOfPages && nextPage && <span className='p-1'>...</span>
+                    }
+                    {
+                        nextPage < numberOfPages && nextPage && <span onClick={() => getPage(numberOfPages)} className='p-2 ps-3 pe-3 d-flex justify-content-center um-pagination-button border border-0 border-top border-end border-bottom'>{numberOfPages}</span>
+                    }
+                    <i className={"bi bi-chevron-double-right p-2 border border-0 border-top border-end border-bottom " + (nextPage == null ? 'um-pagination-disabled' : 'um-pagination-button')} onClick={getNextPage}></i>
+                </div>
                 }  
 
                 <div className={(users.length > 0 ? 'col-6' : '') + ' d-flex justify-content-start'}>
