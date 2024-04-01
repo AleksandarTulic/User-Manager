@@ -5,7 +5,7 @@ import axios from 'axios';
 
 import { BASE_URL } from '../../ProjectConsts';
 import UserList from '../../components/UserList/UserList';
-import RoleUpdateModal from '../../components/common/Role_components/RoleUpdateModal/RoleUpdateModal';
+import RoleUpdateModal from '../../components/common/Role_components/UserUpdateModal/UserUpdateModal';
 
 //Template taken from: https://dev.to/codeply/bootstrap-5-sidebar-examples-38pb
 
@@ -146,7 +146,7 @@ function Users(){
             <form onSubmit={handleSubmit} ref={createUserForm}>
                 <div class="col-sm-12 py-3" id="um-right">
                     <h3 style={{marginLeft: '10px', marginTop: '20px', marginBottom: '20px'}}>User Manager</h3>
-                    <div className='um-box'>
+                    <div className='um-box um-box-shadow'>
                         <div className='row' style={{padding: "10px",paddingBottom: "0px"}}>
                             <div className='col-6'>
                                 <h4>Create User</h4>
