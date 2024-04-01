@@ -1,17 +1,22 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import './Role.css';
 import { MyContext } from '../../MyContext';
-import RoleUpdateModal from '../../components/common/Role_components/RoleUpdateModal/RoleUpdateModal';
+import RoleUpdateModal from '../../components/common/Role_components/UserUpdateModal/UserUpdateModal';
 import { BASE_URL } from '../../ProjectConsts';
 
 function Role(){
+
+    const [flagShowCreateForm, setFlagShowCreateForm] = useState(true);
+
     const [roles, setRoles] = useState([]);
     const [createRoleName, setCreateRoleName] = useState(null);
     const {flagShow, setFlagShow} = useContext(MyContext);
 
     const [updateId, setUpdateId] = useState(null);
     const [flagUpdateModal, setFlagUpdateModal] = useState(0);
+
+    const createUserFormMLButton = useRef(null);
 
     async function addRole(){
         if (!validate(createRoleName)){
@@ -107,24 +112,42 @@ function Role(){
         return regex.test(value);
     }
 
+    function createUserFormShowMore(){
+        setFlagShowCreateForm(!flagShowCreateForm);
+
+        createUserFormMLButton.current.classList.toggle('rotate');
+    }
+
     useEffect(() => {
         fetchData();
     }, []);
 
     return (
-        <div className="col-sm-12 py-3" id="body">
-            <h3 style={{marginLeft: '10px', marginTop: '20px', marginBottom: '20px'}}>Role Manager</h3>
-            <div className='um-box'>
-                <h4>Create Role</h4>
+        <div className="col-sm-12 py-3 w-100" id="body" style={{minWidth: "500px"}}>
+            <form>
+                <h3 style={{marginLeft: '10px', marginTop: '20px', marginBottom: '20px'}}>Role Manager</h3>
+                <div className='um-box um-box-shadow'>
+                    <div className='row' style={{padding: "10px",paddingBottom: "0px"}}>
+                        <div className='col-6'>
+                            <h4>Create Role</h4>
+                        </div>
 
-                <div className="form-floating mb-3 d-flex">
-                    <input type="text" className="form-control" id="floatingInput" placeholder="Admin" onChange={(e) => setCreateRoleName(e.target.value)} />
-                    <label>Role name</label>
-                    <button type="button" className="btn btn-success" style={{width: '20%', marginLeft: '10px'}} onClick={addRole}>Add</button>
+                        <div className='col-6 d-flex justify-content-end'>
+                            <i ref={createUserFormMLButton} class="bi bi-chevron-double-down um-box-ml" onClick={() => createUserFormShowMore()}></i>
+                        </div>
+
+                        <div className='col-12' style={{display: flagShowCreateForm ? 'none' : 'block'}}>
+                            <div className="form-floating mb-3 d-flex">
+                                <input type="text" className="form-control" id="floatingInput" placeholder="Admin" onChange={(e) => setCreateRoleName(e.target.value)} />
+                                <label>Role name</label>
+                                <button type="button" className="btn btn-success" style={{width: '20%', marginLeft: '10px'}} onClick={addRole}>Add</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </form>
 
-            <div className='um-box'>
+            <div className='um-box um-box-shadow'>
                 <h4>Roles</h4>
                 <table className="table table-hover table-bordered">
                     <thead>
@@ -152,7 +175,7 @@ function Role(){
                 </table>
             </div>
 
-            <RoleUpdateModal id={updateId} flag={flagUpdateModal} selectedRole={roles.filter(t => t.id == updateId)[0]?.name} updateRole={updateRole}/>
+            {/*<RoleUpdateModal id={updateId} flag={flagUpdateModal} selectedRole={roles.filter(t => t.id == updateId)[0]?.name} updateRole={updateRole}/>*/}
         </div>
     );
 }
