@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { Modal } from 'bootstrap';
-import './RoleUpdateModal';
+import './UserUpdateModal';
 
-function RoleUpdateModal(props){
+function UserUpdateModal(props){
 
     const [flagShowUpdateForm, setFlagShowUpdateForm] = useState(true);
 
@@ -38,8 +38,8 @@ function RoleUpdateModal(props){
     }, [props.flagShow]);
 
     return (
-        <div ref={modalRef} className="modal" id="role-update-modal">
-            <div className="modal-dialog modal-dialog-centered">
+        <div ref={modalRef} className="modal modal-lg" id="role-update-modal">
+            <div className="modal-dialog modal-dialog-top">
                 <div className="modal-content">
 
                     <div className="modal-header d-flex justify-content-end">
@@ -50,7 +50,7 @@ function RoleUpdateModal(props){
                     <div className="modal-body d-flex">
                         <form onSubmit={handleSubmit} ref={updateUserForm} style={{width: '100%'}}>
                             <div class="col-sm-12 py-3" id="um-right">
-                                <div className='um-box'>
+                                <div className='um-box um-box-shadow'>
                                     <div className='row' style={{padding: "10px",paddingBottom: "0px"}}>
                                         <div className='col-6'>
                                             <h4>Update User</h4>
@@ -123,4 +123,4 @@ function RoleUpdateModal(props){
     );
 }
 
-export default RoleUpdateModal;
+export default UserUpdateModal;
