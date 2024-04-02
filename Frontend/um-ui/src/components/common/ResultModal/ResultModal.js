@@ -34,20 +34,20 @@ function ResultModal(){
 
     return (
         <>
-        <div class="modal" id="result-modal" ref={modalRef}>
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
+        <div className="modal" id="result-modal" ref={modalRef}>
+            <div className="modal-dialog modal-dialog-centered">
+                <div className="modal-content">
 
-                    <div class="modal-header d-flex justify-content-end">
-                        <h4 class="modal-title flex-grow-1">Result</h4>
+                    <div className="modal-header d-flex justify-content-end">
+                        <h4 className="modal-title flex-grow-1">Result</h4>
                         
                         <div className='d-flex justify-content-end'>
-                            <div class="progress blue">
-                                <span class="progress-left">
-                                    <span class="progress-bar"></span>
+                            <div className="progress blue">
+                                <span className="progress-left">
+                                    <span className="progress-bar"></span>
                                 </span>
-                                <span class="progress-right">
-                                    <span class="progress-bar"></span>
+                                <span className="progress-right">
+                                    <span className="progress-bar"></span>
                                 </span>
                             </div>
                         </div>

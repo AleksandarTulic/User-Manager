@@ -16,6 +16,7 @@ function Users(){
 
     const [flagShowCreateForm, setFlagShowCreateForm] = useState(true);
     const [flagShowUpdateModal, setFlagShowUpdateModal] = useState(1);
+    const [refreshCount, setRefreshCount] = useState(1);
     const [selectedForUpdate, setSelectedForUpdate] = useState({});
 
     const [username, setUsername] = useState(null);
@@ -33,7 +34,7 @@ function Users(){
     const createUserFormMLButton = useRef(null);
 
     async function createUser(){
-        if (!validateUser(username, password, firstName, lastName, )){
+        if (validateUser(username, password, firstName, lastName) !== ''){
             //invalid role name
             setFlagShow(flagShow + 1);
 
@@ -47,7 +48,7 @@ function Users(){
                 'firstName': firstName,
                 'lastName': lastName,
                 'genderId': genderId,
-                'roles': []
+                'roles': [2]
             };
 
             const response = await axios.post(BASE_URL  + 'users', data);
@@ -57,8 +58,7 @@ function Users(){
             }
 
             setFlagShow(flagShow + 1);
-
-            //fetchData();
+            setRefreshCount(refreshCount + 1);
 
             createUserForm.current.reset();
         } catch (error) {
@@ -103,8 +103,8 @@ function Users(){
 
     return (
         <div className='row' style={{minWidth: "500px"}}>
-            <form onSubmit={handleSubmit} ref={createUserForm}>
-                <div class="col-sm-12 py-3" id="um-right">
+            <form onSubmit={handleSubmit} ref={createUserForm} className='was-validated'>
+                <div className="col-sm-12 py-3" id="um-right">
                     <h3 style={{marginLeft: '10px', marginTop: '20px', marginBottom: '20px'}}>User Manager</h3>
                     <div className='um-box um-box-shadow'>
                         <div className='row' style={{padding: "10px",paddingBottom: "0px"}}>
@@ -113,43 +113,45 @@ function Users(){
                             </div>
 
                             <div className='col-6 d-flex justify-content-end'>
-                                <i ref={createUserFormMLButton} class="bi bi-chevron-double-down um-box-ml" onClick={() => createUserFormShowMore()}></i>
+                                <i ref={createUserFormMLButton} className="bi bi-chevron-double-down um-box-ml" onClick={() => createUserFormShowMore()}></i>
                             </div>
                         </div>
 
                         <div className='um-box' style={{display: flagShowCreateForm ? 'none' : 'block'}}>
                             <h6>Account info</h6>
                             <div className="form-floating mb-3 d-flex">
-                                <input type="text" className="form-control" placeholder="Username" requried onChange={(e) => setUsername(e.target.value)}/>
-                                <label for="floatingInput">Username</label>
+                                <input pattern='^[A-Za-z@0-9_\-]{2,100}$' type="text" className="form-control" placeholder="Username" required onChange={(e) => setUsername(e.target.value)}/>
+                                <label>Username</label>
                             </div>
 
                             <div className="form-floating mb-3 d-flex">
-                                <input type="password" className="form-control" placeholder="Password" requried onChange={(e) => setPassword(e.target.value)}/>
-                                <label for="floatingInput">Password</label>
+                                <input pattern='^[A-Za-z0-9_\-]{6,60}$' type="password" className="form-control" placeholder="Password" required onChange={(e) => setPassword(e.target.value)}/>
+                                <label>Password</label>
                             </div>
                         </div>
 
                         <div className='um-box' style={{display: flagShowCreateForm ? 'none' : 'block'}}>
                             <h6>Personal info</h6>
                             <div className="form-floating mb-3 d-flex">
-                                <input type="text" className="form-control" placeholder="First name" requried onChange={(e) => setFirstName(e.target.value)} />
-                                <label for="floatingInput">First name</label>
+                                <input pattern='^[A-Za-z]{2,100}$' type="text" className="form-control" placeholder="First name" required onChange={(e) => setFirstName(e.target.value)} />
+                                <label>First name</label>
                             </div>
 
                             <div className="form-floating mb-3 d-flex">
-                                <input type="text" className="form-control" placeholder="Last name" requried onChange={(e) => setLastName(e.target.value)} />
-                                <label for="floatingInput">Last name</label>
+                                <input pattern='^[A-Za-z]{2,100}$' type="text" className="form-control" placeholder="Last name" required onChange={(e) => setLastName(e.target.value)} />
+                                <label>Last name</label>
                             </div>
 
                             <div className="mb-3">
-                                <select className='form-select' value={genderId} onChange={(e) => setGenderId(e.target.value)}>
-                                    {
-                                        genders.map((element) => (
-                                            <option key={element.id} value={element.id}>{element.name}</option>
-                                        ))
-                                    }
-                                </select>
+                                {
+                                    genderId && <select className='form-select' value={genderId} onChange={(e) => setGenderId(e.target.value)}>
+                                        {
+                                            genders.map((element) => (
+                                                <option key={element.id} value={element.id}>{element.name}</option>
+                                            ))
+                                        }
+                                    </select>
+                                }
                             </div>
 
                             {
@@ -172,7 +174,7 @@ function Users(){
                                             }]);
                                         }
                                     }}>
-                                        Add
+                                        Select
                                     </button>
                                 </div>
 
@@ -181,7 +183,7 @@ function Users(){
                                         selectedRoles.map((element, index) => (
                                             <span key={index} className={'p-2 user-roles ms-1'} style={{borderRadius: '10px'}}>
                                                 {element.name}&nbsp;
-                                                <i class="bi bi-x-circle"></i>
+                                                <i className="bi bi-x-circle"></i>
                                             </span>
                                         ))
                                     }
@@ -200,7 +202,13 @@ function Users(){
             </form>
 
             <div className='col-sm-12'>
-                <UserList selectedUser={selectedForUpdate} setSelectedUser={setSelectedForUpdate} flagShowUpdate={flagShowUpdateModal} setFlagShowUpdate={setFlagShowUpdateModal} />
+                <UserList 
+                    refreshCount={refreshCount} 
+                    selectedUser={selectedForUpdate} 
+                    setSelectedUser={setSelectedForUpdate} 
+                    flagShowUpdate={flagShowUpdateModal} 
+                    setFlagShowUpdate={setFlagShowUpdateModal} 
+                />
             </div>
 
             <RoleUpdateModal 

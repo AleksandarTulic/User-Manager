@@ -1,9 +1,12 @@
 import './UserList.css';
-import axios from 'axios';
-import { BASE_URL, PER_PAGE, PER_PAGE_MAX, PER_PAGE_MIN } from '../../ProjectConsts';
-import { useEffect, useState } from 'react';
+import { PER_PAGE, PER_PAGE_MAX, PER_PAGE_MIN } from '../../ProjectConsts';
+import { useEffect, useState, useContext } from 'react';
+import { deleteUser, retrieveNumberOfRows, retrieveUsers } from '../../services/UserCRUD';
+import { MyContext } from '../../MyContext';
 
 function UserList(props){
+
+    const {flagShow, setFlagShow} = useContext(MyContext);
 
     const [users, setUsers] = useState([]);
     const [numberOfPages, setNumberOfPages] = useState(0);
@@ -11,25 +14,6 @@ function UserList(props){
     const [prevPage, setPrevPage] = useState(null);
     const [nextPage, setNextPage] = useState(null);
     const [perPage, setPerPage] = useState(PER_PAGE);
-
-    async function fetchData(offset = 0){
-        axios.get(BASE_URL + 'users/' + offset + "/" + perPage).then(response => {
-            setUsers(response.data);
-        })
-        .catch(error => {
-            setUsers([]);
-            console.error('Error fetching data.')
-        });
-    }
-
-    async function fetchNumberOfRows(){
-        axios.get(BASE_URL + 'users/count').then(response => {
-            setNumberOfPages(Math.ceil(response.data.count / perPage));
-        })
-        .catch(error => {
-            console.error('Error fetching data.')
-        });
-    }
 
     function getPreviousPage(){
         setCurrPage(currPage === 1 ? 1 : currPage - 1);
@@ -43,13 +27,21 @@ function UserList(props){
         setCurrPage(index);
     }
 
+    function resetPagination(){
+        setCurrPage(1);
+
+        if (currPage === 1){
+            retrieveUsers(perPage * (currPage - 1), perPage, setUsers);
+        }
+    }
+
     useEffect(() => {
-        fetchNumberOfRows();
+        retrieveNumberOfRows(setNumberOfPages);
     }, []);
 
     useEffect(() => {
-        fetchNumberOfRows();
-        fetchData();
+        retrieveNumberOfRows(setNumberOfPages);
+        retrieveUsers(perPage * (currPage - 1), perPage, setUsers);
     }, [perPage]);
 
     useEffect(() => {
@@ -60,8 +52,12 @@ function UserList(props){
     useEffect(() => {
         setPrevPage(currPage === 1 ? null : currPage - 1);
         setNextPage(currPage === numberOfPages ? null : currPage + 1);
-        fetchData(perPage * (currPage - 1));
+        retrieveUsers(perPage * (currPage - 1), perPage, setUsers);
     }, [currPage]);
+
+    useEffect(() => {
+        resetPagination();
+    }, [props.refreshCount]);
 
     return (
         <div className='um-box um-box-shadow'>
@@ -80,7 +76,7 @@ function UserList(props){
 
                 <tbody>
                     {
-                        users.map((element) => (
+                         Array.isArray(users) && users.map((element) => (
                             <tr key={element.id}>
                                 <td>{element.id}</td>
                                 <td>{element.username}</td>
@@ -94,7 +90,9 @@ function UserList(props){
                                                 props.setFlagShowUpdate(props.flagShowUpdate + 1);
                                             }} className="bg-warning bi bi-arrow-repeat um-table-ud um-table-u"></i>
                                             &nbsp;
-                                            <i className="bi bi-trash bg-danger text-white um-table-ud um-table-d"></i>
+                                            <i onClick={() => {
+                                                deleteUser(element.id, () => setFlagShow(flagShow + 1), resetPagination);
+                                            }} className="bi bi-trash bg-danger text-white um-table-ud um-table-d"></i>
                                     </div>
                                 </td>
                             </tr>

@@ -101,7 +101,7 @@ function Role(){
                         </div>
 
                         <div className='col-6 d-flex justify-content-end'>
-                            <i ref={createUserFormMLButton} class="bi bi-chevron-double-down um-box-ml" onClick={() => createUserFormShowMore()}></i>
+                            <i ref={createUserFormMLButton} className="bi bi-chevron-double-down um-box-ml" onClick={() => createUserFormShowMore()}></i>
                         </div>
 
                         <div className='col-12' style={{display: flagShowCreateForm ? 'none' : 'block'}}>
