@@ -6,6 +6,7 @@ import axios from 'axios';
 import { BASE_URL } from '../../ProjectConsts';
 import UserList from '../../components/UserList/UserList';
 import RoleUpdateModal from '../../components/common/Role_components/UserUpdateModal/UserUpdateModal';
+import { validateUser } from '../../services/ValidationService';
 
 //Template taken from: https://dev.to/codeply/bootstrap-5-sidebar-examples-38pb
 
@@ -32,9 +33,11 @@ function Users(){
     const createUserFormMLButton = useRef(null);
 
     async function createUser(){
-        let result = validate();
-        if (result !== ''){
-            alert(result);
+        if (!validateUser(username, password, firstName, lastName, )){
+            //invalid role name
+            setFlagShow(flagShow + 1);
+
+            return;
         }
 
         try{
@@ -81,49 +84,6 @@ function Users(){
         .catch(error => {
             console.error('Error fetching data.')
         });
-    }
-
-    function validate(){
-        let result = '';
-
-        if (!username){
-            result = 'Username is required.';
-        }
-
-        if (!password){
-            result += 'Password is required.';
-        }
-
-        if (!firstName){
-            result += 'First name is required.';
-        }
-
-        if (!lastName){
-            result += 'Last name is required.';
-        }
-
-        let regexUsername = /^[A-Za-z@0-9_-]{2,100}$/;
-        let regexPassword = /^[A-Za-z0-9_-]{6,60}$/;
-        let regexFirstName = /^[A-Za-z]{2,100}$/;
-        let regexLastName = /^[A-Za-z]{2,100}$/;
-
-        if (!regexUsername.test(username)){
-            result += 'Invalid username.';
-        }
-
-        if (!regexPassword.test(password)){
-            result += 'Invalid password.';
-        }
-
-        if (!regexFirstName.test(firstName)){
-            result += 'Invalid first name.';
-        }
-
-        if (!regexLastName.test(lastName)){
-            result += 'Invalid last name.';
-        }
-
-        return result;
     }
 
     const handleSubmit = (event) => {

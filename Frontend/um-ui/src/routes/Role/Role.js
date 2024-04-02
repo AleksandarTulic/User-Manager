@@ -2,24 +2,25 @@ import { useContext, useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import './Role.css';
 import { MyContext } from '../../MyContext';
-import RoleUpdateModal from '../../components/common/Role_components/UserUpdateModal/UserUpdateModal';
+import RoleUpdateModal from '../../components/common/Role_components/RoleUpdateModal/RoleUpdateModal';
 import { BASE_URL } from '../../ProjectConsts';
+import { validateRole } from '../../services/ValidationService';
 
 function Role(){
+    const {flagShow, setFlagShow} = useContext(MyContext);
+
+    const [selectedRole, setSelectedRole] = useState({});
+    const [flagShowUpdate, setFlagShowUpdate] = useState(1);
 
     const [flagShowCreateForm, setFlagShowCreateForm] = useState(true);
 
     const [roles, setRoles] = useState([]);
     const [createRoleName, setCreateRoleName] = useState(null);
-    const {flagShow, setFlagShow} = useContext(MyContext);
-
-    const [updateId, setUpdateId] = useState(null);
-    const [flagUpdateModal, setFlagUpdateModal] = useState(0);
 
     const createUserFormMLButton = useRef(null);
 
     async function addRole(){
-        if (!validate(createRoleName)){
+        if (!validateRole(createRoleName)){
             //invalid role name
             setFlagShow(flagShow + 1);
 
@@ -42,33 +43,6 @@ function Role(){
             fetchData();
         } catch (error) {
             console.error("Failed to create a new role.");
-        }
-    }
-
-    async function updateRole(id, updateRoleName){
-        if (!validate(updateRoleName)){
-            //invalid role name
-            setFlagShow(flagShow + 1);
-
-            return;
-        }
-
-        try {
-            const data = {
-                'name': updateRoleName
-            };
-
-            const response = await axios.put(BASE_URL + 'roles/' + id, data);
-
-            if (response.status !== 200){
-                throw new Error('Failed.');
-            }
-
-            setFlagShow(flagShow + 1);
-
-            fetchData();
-        } catch (error) {
-            console.error("Failed to update a role.");
         }
     }
 
@@ -102,21 +76,15 @@ function Role(){
         });
     }
 
-    function validate(value){
-        if (!value){
-            return false;
-        }
-        
-        let regex = /^[A-Za-z]{1,}[A-Za-z0-9-_]{1,}$/;
-        
-        return regex.test(value);
-    }
-
     function createUserFormShowMore(){
         setFlagShowCreateForm(!flagShowCreateForm);
 
         createUserFormMLButton.current.classList.toggle('rotate');
     }
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+    };
 
     useEffect(() => {
         fetchData();
@@ -124,7 +92,7 @@ function Role(){
 
     return (
         <div className="col-sm-12 py-3 w-100" id="body" style={{minWidth: "500px"}}>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <h3 style={{marginLeft: '10px', marginTop: '20px', marginBottom: '20px'}}>Role Manager</h3>
                 <div className='um-box um-box-shadow'>
                     <div className='row' style={{padding: "10px",paddingBottom: "0px"}}>
@@ -165,7 +133,10 @@ function Role(){
                                     <td valign='middle'>{item.id}</td>
                                     <td valign='middle'>{item.name}</td>
                                     <td className='' style={{borderLeft: 'none', borderRight: 'none', textAlign: 'end'}} valign='middle'>
-                                        <i className="bg-warning bi bi-arrow-repeat um-table-ud um-table-u" onClick={() => {setFlagUpdateModal(flagUpdateModal + 1 == Number.MAX_SAFE_INTEGER ? 1 : flagUpdateModal + 1);setUpdateId(item.id)}}></i>&nbsp;
+                                        <i className="bg-warning bi bi-arrow-repeat um-table-ud um-table-u" onClick={() => {
+                                                setSelectedRole(item);
+                                                setFlagShowUpdate(flagShowUpdate + 1);
+                                            }}></i>&nbsp;
                                         <i className="bi bi-trash bg-danger text-white um-table-ud um-table-d" onClick={() => deleteRole(item.id)}></i>
                                     </td>
                                 </tr>
@@ -175,7 +146,12 @@ function Role(){
                 </table>
             </div>
 
-            {/*<RoleUpdateModal id={updateId} flag={flagUpdateModal} selectedRole={roles.filter(t => t.id == updateId)[0]?.name} updateRole={updateRole}/>*/}
+            <RoleUpdateModal 
+                selectedRole={selectedRole} 
+                flagShow={flagShowUpdate} 
+                setFlagShow={setFlagShowUpdate} 
+                fetchData={fetchData}
+            />
         </div>
     );
 }
