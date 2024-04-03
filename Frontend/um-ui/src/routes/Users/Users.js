@@ -1,12 +1,11 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import './Users.css';
 import { MyContext } from '../../MyContext';
-import axios from 'axios';
-
-import { BASE_URL } from '../../ProjectConsts';
 import UserList from '../../components/UserList/UserList';
 import RoleUpdateModal from '../../components/common/Role_components/UserUpdateModal/UserUpdateModal';
-import { validateUser } from '../../services/ValidationService';
+import { createUser } from '../../services/UserCRUD';
+import { handleSubmit } from '../../services/FormService';
+import { retrieveGenders, retrieveRoles } from '../../services/UserCRUD';
 
 //Template taken from: https://dev.to/codeply/bootstrap-5-sidebar-examples-38pb
 
@@ -33,63 +32,6 @@ function Users(){
     const createUserForm = useRef(null);
     const createUserFormMLButton = useRef(null);
 
-    async function createUser(){
-        if (validateUser(username, password, firstName, lastName) !== ''){
-            //invalid role name
-            setFlagShow(flagShow + 1);
-
-            return;
-        }
-
-        try{
-            const data = {
-                'username': username,
-                'password': password,
-                'firstName': firstName,
-                'lastName': lastName,
-                'genderId': genderId,
-                'roles': [2]
-            };
-
-            const response = await axios.post(BASE_URL  + 'users', data);
-
-            if (response.status !== 201){
-                throw new Error('Failed.');
-            }
-
-            setFlagShow(flagShow + 1);
-            setRefreshCount(refreshCount + 1);
-
-            createUserForm.current.reset();
-        } catch (error) {
-            console.error("Failed to create a new user.");
-        }
-    }
-
-    async function retrieveGenders(){
-        axios.get(BASE_URL + 'genders').then(response => {
-            setGenders(response.data);
-            setGenderId(response.data[0].id);
-        })
-        .catch(error => {
-            console.error('Error fetching data.')
-        });
-    }
-
-    async function retrieveRoles(){
-        axios.get(BASE_URL + 'roles').then(response => {
-            setRoles(response.data);
-            setRole(response.data[0]);
-        })
-        .catch(error => {
-            console.error('Error fetching data.')
-        });
-    }
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-    };
-
     function createUserFormShowMore(){
         setFlagShowCreateForm(!flagShowCreateForm);
 
@@ -97,8 +39,8 @@ function Users(){
     }
 
     useEffect(() => {
-        retrieveGenders();
-        retrieveRoles();
+        retrieveGenders(setGenders, setGenderId);
+        retrieveRoles(setRoles, setRole);
     }, []);
 
     return (
@@ -167,7 +109,7 @@ function Users(){
                                     </select>
 
                                     <button className='ms-2 btn btn-success' onClick={() => {
-                                        if (selectedRoles.filter(t => t.id == role.id).length >= 0){
+                                        if (selectedRoles.filter(t => t.id == role.id).length === 0){
                                             setSelectedRoles([...selectedRoles, {
                                                 'id': role.id,
                                                 'name': role.name
@@ -183,7 +125,7 @@ function Users(){
                                         selectedRoles.map((element, index) => (
                                             <span key={index} className={'p-2 user-roles ms-1'} style={{borderRadius: '10px'}}>
                                                 {element.name}&nbsp;
-                                                <i className="bi bi-x-circle"></i>
+                                                <i className="bi bi-x-circle" onClick={() => setSelectedRoles(selectedRoles.filter(i => i.id !== element.id))}></i>
                                             </span>
                                         ))
                                     }
@@ -193,7 +135,24 @@ function Users(){
                         </div>
 
                         <div className={(flagShowCreateForm ? "" : "d-flex ") + "justify-content-end"} style={{padding: "10px", paddingBottom: "0px", display: 'none'}}>
-                            <button className='btn btn-success' onClick={createUser}>
+                            <button className='btn btn-success' onClick={() => {
+                                createUser(
+                                    setFlagShow,
+                                    flagShow,
+                                    {
+                                        'username': username,
+                                        'password': password,
+                                        'firstName': firstName,
+                                        'lastName': lastName,
+                                        'genderId': genderId,
+                                        'roles': selectedRoles.map(t => t.id)
+                                    },
+                                    setRefreshCount,
+                                    refreshCount,
+                                    setSelectedRoles,
+                                    createUserForm
+                                );
+                            }}>
                                 Add
                             </button>
                         </div>

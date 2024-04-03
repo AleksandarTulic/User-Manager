@@ -1,4 +1,5 @@
 import { BASE_URL, PER_PAGE } from "../ProjectConsts";
+import { validateUser } from './ValidationService';
 import axios from "axios"
 
 async function deleteUser(id, showNotification, reset){
@@ -36,11 +37,11 @@ async function retrieveUsers(offset = 0, perPage = PER_PAGE, setUsers){
     return true;
 }
 
-async function retrieveNumberOfRows(setNumberOfPages){
+async function retrieveNumberOfRows(perPage, setNumberOfPages){
     try{
         const response = await axios.get(BASE_URL + 'users/count');
 
-        setNumberOfPages(response.data.count)
+        setNumberOfPages(Math.ceil(response.data.count / perPage))
     }catch (err){
         return false;
     }
@@ -48,4 +49,49 @@ async function retrieveNumberOfRows(setNumberOfPages){
     return true;
 }
 
-export {deleteUser, retrieveNumberOfRows, retrieveUsers}
+async function retrieveGenders(setGenders, setGenderId){
+    axios.get(BASE_URL + 'genders').then(response => {
+        setGenders(response.data);
+        setGenderId(response.data[0].id);
+    })
+    .catch(error => {
+        console.error('Error fetching data.')
+    });
+}
+
+async function retrieveRoles(setRoles, setRole){
+    axios.get(BASE_URL + 'roles').then(response => {
+        setRoles(response.data);
+        setRole(response.data[0]);
+    })
+    .catch(error => {
+        console.error('Error fetching data.')
+    });
+}
+
+async function createUser(setFlagShow, flagShow, data, setRefreshCount, refreshCount, setSelectedRoles, createUserForm){
+    if (validateUser(data['username'], data['password'], data['firstName'], data['lastName'], data['roles']) !== ''){
+        //invalid role name
+        setFlagShow(flagShow + 1);
+
+        return;
+    }
+
+    try{
+        const response = await axios.post(BASE_URL  + 'users', data);
+
+        if (response.status !== 201){
+            throw new Error('Failed.');
+        }
+
+        setFlagShow(flagShow + 1);
+        setRefreshCount(refreshCount + 1);
+        setSelectedRoles([]);
+
+        createUserForm.current.reset();
+    } catch (error) {
+        console.error("Failed to create a new user.");
+    }
+}
+
+export {deleteUser, retrieveNumberOfRows, retrieveUsers, retrieveGenders, retrieveRoles, createUser}

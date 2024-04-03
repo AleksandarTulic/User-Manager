@@ -8,7 +8,7 @@ function validateRole(value){
     return regex.test(value);
 }
 
-function validateUser(username, password, firstName, lastName){
+function validateUser(username, password, firstName, lastName, roles){
     let result = '';
 
     if (!username){
@@ -25,6 +25,10 @@ function validateUser(username, password, firstName, lastName){
 
     if (!lastName){
         result += 'Last name is required.';
+    }
+
+    if (roles.length === 0){
+        result += 'At least one role is required.';
     }
 
     let regexUsername = /^[A-Za-z@0-9_-]{2,100}$/;

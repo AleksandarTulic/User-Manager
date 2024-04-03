@@ -36,11 +36,11 @@ function UserList(props){
     }
 
     useEffect(() => {
-        retrieveNumberOfRows(setNumberOfPages);
+        retrieveNumberOfRows(perPage, setNumberOfPages);
     }, []);
 
     useEffect(() => {
-        retrieveNumberOfRows(setNumberOfPages);
+        retrieveNumberOfRows(perPage, setNumberOfPages);
         retrieveUsers(perPage * (currPage - 1), perPage, setUsers);
     }, [perPage]);
 
@@ -70,6 +70,7 @@ function UserList(props){
                         <th>First name</th>
                         <th>Last name</th>
                         <th>Gender</th>
+                        <th>Roles</th>
                         <th>&nbsp;</th>
                     </tr>
                 </thead>
@@ -82,7 +83,8 @@ function UserList(props){
                                 <td>{element.username}</td>
                                 <td>{element.first_name}</td>
                                 <td>{element.last_name}</td>
-                                <td>{element.sex_id}</td>
+                                <td>{element.gender}</td>
+                                <td>{element.roles.map((t, index) => t.name + (index === (element.roles.length - 1) ? '' : ', '))}</td>
                                 <td>
                                     <div className='d-flex justify-content-end'>
                                             <i onClick={() => {
