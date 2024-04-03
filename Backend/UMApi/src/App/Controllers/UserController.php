@@ -27,6 +27,10 @@ class UserController{
     public function getAll(Request $request, Response $response, $offset, $itemsPerPage) : Response{
         $arr = $this->repository->getAll($offset, $itemsPerPage);
 
+        foreach ($arr as $key => $value){
+            $arr[$key]['roles'] = $this->repository->getUserRoles($value['id']);
+        }
+
         $body = json_encode($arr);
 
         $response->getBody()->write($body);

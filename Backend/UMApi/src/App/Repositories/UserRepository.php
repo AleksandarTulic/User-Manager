@@ -86,7 +86,7 @@ class UserRepository{
     public function getAll(int $offset = 0, int $itemsPerPage = PHP_INT_MAX):array{
         $pdo = $this->db->getConnection();
 
-        $stmt = $pdo->prepare('SELECT u.* FROM users u, sexes s 
+        $stmt = $pdo->prepare('SELECT u.id, u.username, u.first_name, u.last_name, s.name as gender FROM users u, sexes s 
                                WHERE u.sex_id = s.id and u.state = :state order by u.id limit :offset, :itemsPerPage');
         $stmt->bindValue(':state', ProjectConstants::ACTIVE_STATE, PDO::PARAM_INT);
         $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
@@ -106,6 +106,18 @@ class UserRepository{
         $stmt->execute();
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function getUserRoles(string $id):array{
+        $sql = 'SELECT r.name FROM user_roles ur, roles r WHERE r.id = ur.role_id and ur.user_id=:id and r.state=:state';
+        $pdo = $this->db->getConnection();
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmt->bindValue(':state', ProjectConstants::ACTIVE_STATE, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function create(User $user):string{
