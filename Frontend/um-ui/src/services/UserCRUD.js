@@ -94,4 +94,34 @@ async function createUser(setFlagShow, flagShow, data, setRefreshCount, refreshC
     }
 }
 
-export {deleteUser, retrieveNumberOfRows, retrieveUsers, retrieveGenders, retrieveRoles, createUser}
+async function updateUser(setFlagShow, flagShow, id, data, setRefreshCount, refreshCount, setSelectedRoles, updateUserForm){
+    console.log(validateUser(data['username'], data['password'], data['firstName'], data['lastName'], data['roles']));
+    console.log(data);
+    if (validateUser(data['username'], data['password'], data['firstName'], data['lastName'], data['roles']) !== ''){
+        //invalid role name
+        setFlagShow(flagShow + 1);
+
+        return;
+    }
+
+    console.log('nije proslo ...');
+
+    try{
+        const response = await axios.put(BASE_URL  + 'users/' + id, data);
+
+        console.log(response);
+        if (response.status !== 200){
+            throw new Error('Failed.');
+        }
+
+        setFlagShow(flagShow + 1);
+        setRefreshCount(refreshCount + 1);
+        setSelectedRoles([]);
+
+        updateUserForm.current.reset();
+    } catch (error) {
+        console.error("Failed to update a user.");
+    }
+}
+
+export {deleteUser, retrieveNumberOfRows, retrieveUsers, retrieveGenders, retrieveRoles, createUser, updateUser}

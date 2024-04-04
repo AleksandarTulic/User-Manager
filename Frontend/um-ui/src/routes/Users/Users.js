@@ -175,7 +175,9 @@ function Users(){
                 roles={roles}
                 selectedUser={selectedForUpdate} 
                 flagShow={flagShowUpdateModal} 
-                setFlagShow={setFlagShowUpdateModal} 
+                setFlagShow={setFlagShowUpdateModal}
+                refreshCount={refreshCount}
+                setRefreshCount={setRefreshCount}
             />
         </div>
     );

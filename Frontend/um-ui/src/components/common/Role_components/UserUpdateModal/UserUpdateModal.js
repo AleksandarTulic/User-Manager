@@ -1,8 +1,12 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useContext } from 'react';
 import { Modal } from 'bootstrap';
 import './UserUpdateModal';
+import { retrieveRoles, updateUser } from '../../../../services/UserCRUD';
+import { MyContext } from '../../../../MyContext';
 
 function UserUpdateModal(props){
+
+    const {flagShow, setFlagShow} = useContext(MyContext);
 
     const [flagShowUpdateForm, setFlagShowUpdateForm] = useState(true);
 
@@ -12,13 +16,12 @@ function UserUpdateModal(props){
     const [lastName, setLastName] = useState(null);
     const [genderId, setGenderId] = useState(null);
     const [rolesId, setRolesId] = useState([]);
+    const [role, setRole] = useState(null);
+    const [selectedRoles, setSelectedRoles] = useState([]);
 
     const modalRef = useRef(null);
     const updateUserForm = useRef(null);
     const updateUserFormMLButton = useRef(null);
-
-    async function updateUser(){
-    }
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -32,7 +35,14 @@ function UserUpdateModal(props){
 
     useEffect(() => {
         if (props.flagShow > 1){
-            setGenderId(props.selectedUser.sex_id);
+            setUsername(props.selectedUser.username);
+            setFirstName(props.selectedUser.first_name);
+            setLastName(props.selectedUser.last_name);
+
+            setGenderId(props.genders.filter(t => t.name === props.selectedUser.gender).map(e => e.id)[0]);
+            setSelectedRoles(props.roles.filter(t => props.selectedUser.roles.some(e => e.name === t.name)));
+            setRole(props.roles[0]);
+
             new Modal(modalRef.current).show();
         }
     }, [props.flagShow]);
@@ -98,19 +108,64 @@ function UserUpdateModal(props){
                                             }
                                         </div>
 
-                                        <div className="mb-3">
-                                            <select className='form-select'>
-                                                {
-                                                    props.roles.map((element) => (
-                                                        <option key={element.id} value={element.id}>{element.name}</option>
-                                                    ))
-                                                }
-                                            </select>
-                                        </div>
+                                        {
+                                            role && <div className="mb-3 um-box">
+                                                <h5>Roles</h5>
+                                                <div className='d-flex'>
+                                                    <select className='form-select' value={role.id} onChange={(e) => setRole(props.roles.filter(t => t.id == e.target.value)[0])}>
+                                                        {
+                                                            props.roles.map((element) => (
+                                                                <option key={element.id} value={element.id}>{element.name}</option>
+                                                            ))
+                                                        }
+                                                    </select>
+
+                                                    <button className='ms-2 btn btn-success' onClick={() => {
+                                                        if (selectedRoles.filter(t => t.id == role.id).length === 0){
+                                                            setSelectedRoles([...selectedRoles, {
+                                                                'id': role.id,
+                                                                'name': role.name
+                                                            }]);
+                                                        }
+                                                    }}>
+                                                        Select
+                                                    </button>
+                                                </div>
+
+                                                <div className='um-box' style={{margin: '0px', marginTop: '10px'}}>
+                                                    {
+                                                        selectedRoles.map((element, index) => (
+                                                            <span key={index} className={'p-2 user-roles ms-1'} style={{borderRadius: '10px'}}>
+                                                                {element.name}&nbsp;
+                                                                <i className="bi bi-x-circle" onClick={() => setSelectedRoles(selectedRoles.filter(i => i.id !== element.id))}></i>
+                                                            </span>
+                                                        ))
+                                                    }
+                                                </div>
+                                            </div>
+                                        }
                                     </div>
 
                                     <div className={(flagShowUpdateForm ? "" : "d-flex ") + "justify-content-end"} style={{padding: "10px", paddingBottom: "0px", display: 'none'}}>
-                                        <button className='btn btn-success' onClick={updateUser}>
+                                        <button className='btn btn-success' onClick={() => {
+                                            updateUser(
+                                                setFlagShow,
+                                                flagShow,
+                                                props.selectedUser.id,
+                                                {
+                                                    'username': username,
+                                                    'password': password,
+                                                    'firstName': firstName,
+                                                    'lastName': lastName,
+                                                    'genderId': genderId,
+                                                    'roles': selectedRoles.map(t => t.id)
+                                                },
+                                                props.setRefreshCount,
+                                                props.refreshCount,
+                                                setSelectedRoles,
+                                                updateUserForm
+                                            )
+                                        }}>
                                             Update
                                         </button>
                                     </div>
