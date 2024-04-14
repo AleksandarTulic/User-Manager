@@ -16,7 +16,7 @@ create table `roles`(
 create table `users`(
 	id int not null auto_increment,
 	username varchar(100) not null unique check(length(username) >= 2),
-	password varchar(520) not null check(length(password)>=512),
+	password varchar(520) not null check(length(password)>=120),
 	salt varchar(32) not null check(length(salt)=32),
 	state int not null default 3,
 	first_name varchar(100) null check(length(first_name) >= 2),
