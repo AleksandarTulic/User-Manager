@@ -53,6 +53,18 @@ create table usermanagerdb.`role_rights`(
 	primary key(id)
 );
 
+create table usermanagerdb.`refresh_tokens`(
+	id int not null auto_increment,
+	token text not null check(length(token)>=2),
+	ip varchar(50) not null check(length(ip)>=2),
+	created_dt timestamp not null default now(),
+	expired_dt timestamp not null default DATE_ADD(NOW(), INTERVAL 1440 MINUTE),
+	number_of_times int not null default 5,
+	user_id int not null,
+	foreign key (user_id) references users(id) on update cascade on delete restrict,
+	primary key(id)
+);
+
 insert into roles(name) values('USER');
 insert into roles(name) values('ADMIN');
 
