@@ -7,6 +7,8 @@ import { MyContext } from '../../../../MyContext';
 function UserUpdateModal(props){
 
     const {flagShow, setFlagShow} = useContext(MyContext);
+    const {message, setMessage} = useContext(MyContext);
+    const {messageType, setMessageType} = useContext(MyContext);
 
     const [flagShowUpdateForm, setFlagShowUpdateForm] = useState(true);
 
@@ -35,6 +37,7 @@ function UserUpdateModal(props){
 
     useEffect(() => {
         if (props.flagShow > 1){
+            console.log(props.selectedUser);
             setUsername(props.selectedUser.username);
             setFirstName(props.selectedUser.first_name);
             setLastName(props.selectedUser.last_name);
@@ -149,6 +152,8 @@ function UserUpdateModal(props){
                                     <div className={(flagShowUpdateForm ? "" : "d-flex ") + "justify-content-end"} style={{padding: "10px", paddingBottom: "0px", display: 'none'}}>
                                         <button className='btn btn-success' onClick={() => {
                                             updateUser(
+                                                setMessage,
+                                                setMessageType,
                                                 setFlagShow,
                                                 flagShow,
                                                 props.selectedUser.id,

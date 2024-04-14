@@ -94,22 +94,20 @@ async function createUser(setFlagShow, flagShow, data, setRefreshCount, refreshC
     }
 }
 
-async function updateUser(setFlagShow, flagShow, id, data, setRefreshCount, refreshCount, setSelectedRoles, updateUserForm){
-    console.log(validateUser(data['username'], data['password'], data['firstName'], data['lastName'], data['roles']));
-    console.log(data);
-    if (validateUser(data['username'], data['password'], data['firstName'], data['lastName'], data['roles']) !== ''){
+async function updateUser(setMessage, setMessageType, setFlagShow, flagShow, id, data, setRefreshCount, refreshCount, setSelectedRoles, updateUserForm){
+    let valRes = validateUser(data['username'], data['password'], data['firstName'], data['lastName'], data['roles']);
+    if ( valRes !== ''){
         //invalid role name
         setFlagShow(flagShow + 1);
+        setMessage(valRes);
+        setMessageType(0);
 
         return;
     }
 
-    console.log('nije proslo ...');
-
     try{
         const response = await axios.put(BASE_URL  + 'users/' + id, data);
 
-        console.log(response);
         if (response.status !== 200){
             throw new Error('Failed.');
         }

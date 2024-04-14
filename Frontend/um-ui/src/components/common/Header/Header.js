@@ -1,13 +1,16 @@
 import { useEffect, useRef, useState } from 'react';
 import './Header.css';
+import { logout } from '../../../services/AuthenticationService';
 
 function Header(){
     const [flagVisability, setFlagVisability] = useState('');
     const [buttonStyle, setButtonStyle] = useState('');
+    const [flagLogin, setFlagLogin] = useState();
 
     const homeLinkRef = useRef(null);
     const rolesLinkRef = useRef(null);
     const usersLinkRef = useRef(null);
+    const accessControlTestLinkRef = useRef(null);
 
     function showHideSidebar(){
         setFlagVisability(flagVisability === '' ? 'sidebar-none' : '');
@@ -33,6 +36,9 @@ function Header(){
             case 'users':
                 usersLinkRef.current.className += ' header-link-active';
                 break;
+            case 'access-control-test':
+                accessControlTestLinkRef.current.className += ' header-link-active';
+                break;
             default:
                 homeLinkRef.current.className += ' header-link-active';
                 break;
@@ -40,6 +46,8 @@ function Header(){
     }
 
     useEffect(() => {
+        setFlagLogin(localStorage.getItem('flagLogin'));
+
         showActive();
 
         const handleResize = () => {
@@ -89,6 +97,21 @@ function Header(){
                     <li ref={homeLinkRef} className='header-link'><i className="bi bi-house-door"></i> <a href='/' style={{textDecoration: 'none', color: 'inherit'}}>Home</a></li>
                     <li ref={rolesLinkRef} className='header-link'><i className="bi bi-person-lock"></i> <a href='roles' style={{textDecoration: 'none', color: 'inherit'}}>Roles</a></li>
                     <li ref={usersLinkRef} className='header-link'><i className="bi bi-people"></i> <a href='users' style={{textDecoration: 'none', color: 'inherit'}}>Users</a></li>
+                    <li ref={accessControlTestLinkRef} className='header-link'><i class="bi bi-shield-check"></i> <a href='access-control-test' style={{textDecoration: 'none', color: 'inherit'}}>Access Control Test</a></li>
+                
+                    {
+                        flagLogin === 'true' ?
+                        <li className='header-link login_logout' onClick={() => {
+                            logout();
+                            setFlagLogin(localStorage.getItem('flagLogin'));
+                        }}>
+                            <i class="bi bi-box-arrow-in-left"></i> Logout
+                        </li>
+                        :
+                        <li className='header-link login_logout' data-bs-toggle="modal" data-bs-target="#loginModal">
+                            <i class="bi bi-box-arrow-in-right"></i> Login 
+                        </li>
+                    }
                 </ul>
             </div>
         </div>

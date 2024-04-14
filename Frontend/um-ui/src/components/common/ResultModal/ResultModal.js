@@ -6,8 +6,8 @@ import { Modal } from 'bootstrap';
 
 function ResultModal(){
     const [arrCloseActions, setArrCloseActions] = useState([]);
-    const [message, setMessage] = useState("Success.");
-    const [messageType, setMessageType] = useState(1);
+    const {message, setMessage} = useContext(MyContext);
+    const {messageType, setMessageType} = useContext(MyContext);
     const closeButtonRef = useRef(null);
     const modalRef = useRef(null);
     const {flagShow, setFlagShow} = useContext(MyContext);

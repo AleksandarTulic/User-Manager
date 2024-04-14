@@ -52,3 +52,7 @@
     background-color: #000000;
     color: #ffffff;
 }
+
+.login_logout:hover{
+    cursor: pointer;
+}

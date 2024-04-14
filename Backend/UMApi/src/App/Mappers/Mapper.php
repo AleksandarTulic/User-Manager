@@ -4,12 +4,19 @@ namespace App\Mappers;
 
 use App\Mappers\Impl\ArrayToLoginResponseDTO;
 use App\Mappers\Impl\ArrayToUserLogin;
+use App\Mappers\Impl\ArrayToNewTokenDTO;
+use App\Mappers\Impl\ArrayToLoginDTO;
+use App\Mappers\Impl\ArrayToRole;
+use App\Mappers\Impl\ArrayToUser;
+
 use App\Models\DTO\LoginDTO;
+use App\Models\DTO\NewTokenDTO;
 use App\Models\DTO\LoginResponseDTO;
 use App\Services\CryptoService;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\UserLogin;
+use App\Models\RefreshToken;
 
 class Mapper{
 
@@ -31,6 +38,10 @@ class Mapper{
             $mapper = new ArrayToLoginResponseDTO();
         }else if (gettype($defaultArray) === gettype($body) && $to === UserLogin::class){
             $mapper = new ArrayToUserLogin();
+        }else if (gettype($defaultArray) === gettype($body) && $to === NewTokenDTO::class){
+            $mapper = new ArrayToNewTokenDTO();
+        }else if (gettype($defaultArray) === gettype($body) && $to === RefreshToken::class){
+            $mapper = new ArrayToRefreshToken();
         }
 
         return $mapper->getMapping($body);

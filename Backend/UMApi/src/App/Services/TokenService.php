@@ -17,18 +17,20 @@ class TokenService{
                                 private RoleRightsRepository $roleRightsRepository){
     }
 
-    public function createToken(string $username, array $roles){
+    public function createToken(string $username, array $roles, int $timeInc = 30){
         $header = '
             "header":{
-                "algorithm": "sha512"
+                "algorithm": "hmacSha256"
             }
         ';
 
+        $currentTime = time();
         $payload = '
             "payload":{
                 "username": "' . $username . '",
                 "roles": ' . json_encode($roles) . ',
-                "created": ' . time() . '
+                "created_at": ' . $currentTime . ',
+                "expires_at": ' . strtotime('+' . $timeInc . ' minutes', $currentTime) . '
             }
         ';
 
@@ -64,7 +66,8 @@ class TokenService{
             "payload":{
                 "username": "' . $tokenArr->payload->username . '",
                 "roles": ' . json_encode($tokenArr->payload->roles) . ',
-                "created": ' . $tokenArr->payload->created . '
+                "created_at": ' . $tokenArr->payload->created_at . ',
+                "expires_at": ' . $tokenArr->payload->expires_at . '
             }
         ';
         
@@ -91,7 +94,10 @@ class TokenService{
         if (!property_exists($tokenArr->payload, 'roles'))
             return false;
 
-        if (!property_exists($tokenArr->payload, 'created'))
+        if (!property_exists($tokenArr->payload, 'created_at'))
+            return false;
+
+        if (!property_exists($tokenArr->payload, 'expires_at'))
             return false;
 
         if (!property_exists($tokenArr, 'signature'))
@@ -107,6 +113,14 @@ class TokenService{
         $tokenArr = json_decode($this->cryptoService->base64Decode($token));
     
         $result = $this->loginRedisRepository->getUserToken($tokenArr->payload->username);
+
+        return $result !== null;
+    }
+
+    public function validateExpirationRefreshToken(string $token){
+        $tokenArr = json_decode($this->cryptoService->base64Decode($token));
+    
+        $result = $this->loginRedisRepository->getUserToken($tokenArr->payload->username . '_refreshToken');
 
         return $result !== null;
     }

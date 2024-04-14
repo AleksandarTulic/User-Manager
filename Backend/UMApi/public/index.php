@@ -58,6 +58,7 @@ $app->group('/api', function (RouteCollectorProxy $group){
     $group->delete('/users/{id:[0-9]+}', [UserController::class, 'delete']);
 
     $group->post('/login', [AuthController::class, 'login']);
+    $group->post('/accessToken', [AuthController::class, 'createNewAccessToken']);
 
     $group->get('/genders', [GenderController::class, 'getAll']);
 

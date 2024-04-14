@@ -13,7 +13,7 @@ class ArrayToLoginDTO implements IMapper{
         $dto = new LoginDTO();
         
         $dto->username = $body['username'];
-        $dto->username = $body['password'];
+        $dto->password = $body['password'];
 
         return $dto;
     }

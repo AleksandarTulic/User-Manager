@@ -44,9 +44,9 @@ function Users(){
     }, []);
 
     return (
-        <div className='row' style={{minWidth: "500px"}}>
+        <div className='row w-100' id="body" style={{minWidth: "500px"}}>
             <form onSubmit={handleSubmit} ref={createUserForm} className='was-validated'>
-                <div className="col-sm-12 py-3" id="um-right">
+                <div className="col-sm-12 py-3">
                     <h3 style={{marginLeft: '10px', marginTop: '20px', marginBottom: '20px'}}>User Manager</h3>
                     <div className='um-box um-box-shadow'>
                         <div className='row' style={{padding: "10px",paddingBottom: "0px"}}>
@@ -160,7 +160,7 @@ function Users(){
                 </div>
             </form>
 
-            <div className='col-sm-12'>
+            <div className='col-sm-12 w-100' id="body">
                 <UserList 
                     refreshCount={refreshCount} 
                     selectedUser={selectedForUpdate} 

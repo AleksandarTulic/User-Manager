@@ -94,6 +94,8 @@
 
 #body{
     width: calc(75% - 24px);
+    min-width: 500px;
+    min-height: 2000px;
 }
 
 /*

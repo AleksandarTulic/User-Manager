@@ -7,6 +7,9 @@ import Users from './routes/Users/Users';
 import Home from './routes/Home/Home';
 import ResultModal from './components/common/ResultModal/ResultModal';
 import { MyContextProvider } from './MyContext';
+import AccessControlTest from './routes/AccessControlTest/AccessControlTest';
+import Footer from './components/common/Footer/Footer';
+import LoginModal from './components/LoginModal/LoginModal';
 
 function App() {
   return (
@@ -15,12 +18,15 @@ function App() {
         <div>
           <MyContextProvider>
             <ResultModal />
+            <LoginModal />
             <Header />
             <Routes>
                 <Route path="/roles" element={<Role />} />
                 <Route path="/users" element={<Users />} />
+                <Route path="/access-control-test" element={<AccessControlTest />} />
                 <Route path="/" element={<Home />} />
             </Routes>
+            <Footer />
           </MyContextProvider>
         </div>
       </div>
